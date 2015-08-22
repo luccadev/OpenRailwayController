@@ -11,11 +11,18 @@
 #include "sensorevents.h"
 
 #include "rocview/public/guiapp.h"
+#include "rocview/dialogs/locseldlg.h"
+
 #include "rocview/wrapper/public/Gui.h"
 #include "rocview/wrapper/public/SensorMonitor.h"
 
 #include "rocrail/wrapper/public/Feedback.h"
 #include "rocrail/wrapper/public/Item.h"
+#include "rocrail/wrapper/public/Loc.h"
+#include "rocrail/wrapper/public/Car.h"
+#include "rocrail/wrapper/public/ModelCmd.h"
+
+#include "rocs/public/trace.h"
 
 
 SensorEventsDlg::SensorEventsDlg( wxWindow* parent )
@@ -42,6 +49,7 @@ SensorEventsDlg::SensorEventsDlg( wxWindow* parent )
   }
 
   m_Reset->Enable(false);
+  m_AssignIdent->Enable(false);
 }
 
 
@@ -61,6 +69,7 @@ void SensorEventsDlg::initLabels() {
   m_EventList->InsertColumn(11, wxT( "GPS" ), wxLIST_FORMAT_LEFT );
   m_Refresh->SetLabel(wxGetApp().getMsg( "refresh" ));
   m_Reset->SetLabel(wxGetApp().getMsg( "reset" ));
+  m_AssignIdent->SetLabel(wxGetApp().getMsg( "assignident" ));
 }
 
 static bool m_bSortInvert = false;
@@ -314,6 +323,7 @@ void SensorEventsDlg::onListSelected( wxListEvent& event ) {
   int index = event.GetIndex();
   m_FbEvent = (iONode)m_EventList->GetItemData(index);
   m_Reset->Enable(true);
+  m_AssignIdent->Enable(true);
 }
 
 
@@ -326,6 +336,7 @@ void SensorEventsDlg::onReset( wxCommandEvent& event ) {
     wxGetApp().sendToRocrail( cmd );
     cmd->base.del(cmd);
     m_Reset->Enable(false);
+    m_AssignIdent->Enable(false);
     m_FbEvent = NULL;
   }
 }
@@ -357,4 +368,39 @@ void SensorEventsDlg::onDrag( wxListEvent& event ) {
 void SensorEventsDlg::onHelp( wxCommandEvent& event ) {
   wxGetApp().openLink( "sensormon" );
 }
+
+void SensorEventsDlg::onAssign( wxCommandEvent& event ) {
+  if( m_FbEvent == NULL )
+    return;
+  // ToDo: Assign the identifier of the selected event to Loco or Car...
+  LocSelDlg*  dlg = new LocSelDlg(this, NULL, false, NULL, true );
+
+  if( wxID_OK == dlg->ShowModal() ) {
+    iONode l_Props = dlg->getProperties();
+    if( l_Props != NULL ) {
+      TraceOp.trc( "sensormon", TRCLEVEL_INFO, __LINE__, 9999, "assigne [%s] to mobile=%s", wFeedback.getidentifier(m_FbEvent), wItem.getid(l_Props) );
+
+      if( StrOp.equals( wLoc.name(), NodeOp.getName(l_Props)))
+        wLoc.setidentifier(l_Props, wFeedback.getidentifier(m_FbEvent));
+      else
+        wCar.setident(l_Props, wFeedback.getidentifier(m_FbEvent));
+
+      if( !wxGetApp().isStayOffline() ) {
+        /* Notify RocRail. */
+        iONode cmd = NodeOp.inst( wModelCmd.name(), NULL, ELEMENT_NODE );
+        wModelCmd.setcmd( cmd, wModelCmd.modify );
+        NodeOp.addChild( cmd, (iONode)NodeOp.base.clone( l_Props ) );
+        wxGetApp().sendToRocrail( cmd );
+        cmd->base.del(cmd);
+      }
+      else {
+        wxGetApp().setLocalModelModified(true);
+      }
+
+    }
+  }
+  dlg->Destroy();
+  Raise();
+}
+
 

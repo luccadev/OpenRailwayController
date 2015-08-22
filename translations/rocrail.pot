@@ -8099,3 +8099,9 @@ msgstr ""
 msgid "Stop assemble train"
 msgstr ""
 
+#. 
+# id="assignident"
+#, c-format
+msgid "Assign identifier"
+msgstr ""
+

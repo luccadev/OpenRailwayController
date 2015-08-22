@@ -31841,4 +31841,7 @@
   <Msg id="stopassembletrain">
     <en txt="Stop assemble train"/>
   </Msg>
+  <Msg id="assignident">
+    <en txt="Assign identifier"/>
+  </Msg>
 </Messages>
