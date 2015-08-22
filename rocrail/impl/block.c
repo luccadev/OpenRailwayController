@@ -441,7 +441,7 @@ static Boolean _event( iIBlockBase inst, Boolean puls, const char* id, const cha
 
   if( data->assemblingtrain ) {
     iOCar car = ModelOp.getCarByIdent(AppOp.getModel(), ident);
-    TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999, "assembling train [%s] in block [%s] car ident [%s]", data->assembletrainid, data->id, ident );
+    TraceOp.trc( name, TRCLEVEL_CALC, __LINE__, 9999, "assembling train [%s] in block [%s] car ident [%s]", data->assembletrainid, data->id, ident );
     if( car != NULL ) {
       int i = 0;
       for( i = 0; i < ListOp.size(data->assembledtrain); i++) {
@@ -449,7 +449,7 @@ static Boolean _event( iIBlockBase inst, Boolean puls, const char* id, const cha
           return True;
         }
       }
-      TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999, "train [%s]: new car added [%s]", data->assembletrainid, CarOp.base.id(car) );
+      TraceOp.trc( name, TRCLEVEL_CALC, __LINE__, 9999, "train [%s]: new car added [%s]", data->assembletrainid, CarOp.base.id(car) );
       ListOp.add( data->assembledtrain, (obj)car);
     }
     return True;
@@ -2507,7 +2507,7 @@ static void __CreateTrain(iIBlockBase inst) {
 
   if( data->assembledtrain == NULL )
     return;
-  TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999, "create train in block [%s]: %d", data->id, ListOp.size(data->assembledtrain) );
+  TraceOp.trc( name, TRCLEVEL_CALC, __LINE__, 9999, "create train in block [%s]: %d", data->id, ListOp.size(data->assembledtrain) );
   {
     iONode op = NodeOp.inst(wOperator.name(), NULL, ELEMENT_NODE);
     char* carids = NULL;
@@ -2620,7 +2620,7 @@ static Boolean _cmd( iIBlockBase inst, iONode nodeA ) {
   }
 
   if( !slaveBlock && cmd != NULL && StrOp.equals(cmd, wBlock.startassembletrain) ) {
-    TraceOp.trc( name, TRCLEVEL_WARNING, __LINE__, 9999, "start assembling train [%s] in block [%s]...", wLoc.gettrain(nodeA), data->id);
+    TraceOp.trc( name, TRCLEVEL_CALC, __LINE__, 9999, "start assembling train [%s] in block [%s]...", wLoc.gettrain(nodeA), data->id);
     data->assemblingtrain = True;
     if( data->assembletrainid != NULL )
       StrOp.free(data->assembletrainid);
