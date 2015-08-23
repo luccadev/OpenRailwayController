@@ -895,3 +895,8 @@ void ABoxDlg::onSelectApp( wxCommandEvent& event ) {
 }
 
 
+void ABoxDlg::onFindWeb( wxCommandEvent& event ) {
+  TraceOp.trc( "aboxdlg", TRCLEVEL_INFO, __LINE__, 9999, "find in web %s", (const char*)m_FindText->GetValue().mb_str(wxConvUTF8) );
+  wxLaunchDefaultBrowser( wxT("http://www.google.com/search?q=")+m_FindText->GetValue() );
+}
+
