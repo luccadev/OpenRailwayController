@@ -40,6 +40,7 @@ class SensorEventsDlg : public SensorEventsGen
 		void onHelp( wxCommandEvent& event );
 		void onAssign( wxCommandEvent& event ) ;
 		void onFindIdent( wxCommandEvent& event );
+		void onListActivated( wxListEvent& event );
 };
 
 #endif // __sensorevents__

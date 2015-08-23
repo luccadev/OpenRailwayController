@@ -12,6 +12,7 @@
 
 #include "rocview/public/guiapp.h"
 #include "rocview/dialogs/locseldlg.h"
+#include "rocview/dialogs/feedbackdialog.h"
 
 #include "rocview/wrapper/public/Gui.h"
 #include "rocview/wrapper/public/SensorMonitor.h"
@@ -451,6 +452,22 @@ void SensorEventsDlg::onFindIdent( wxCommandEvent& event ) {
     Raise();
   }
 
+}
+
+void SensorEventsDlg::onListActivated( wxListEvent& event ) {
+  if( m_FbEvent == NULL )
+    return;
+
+  const char* id = wFeedback.getid(m_FbEvent);
+  if( id == NULL || StrOp.len(id) == 0 )
+    return;
+  iONode fb = wxGetApp().getFrame()->findSensor(id);
+  if( fb != NULL ) {
+    FeedbackDialog*  dlg = new FeedbackDialog(this, fb );
+    dlg->ShowModal();
+    dlg->Destroy();
+    Raise();
+  }
 }
 
 
