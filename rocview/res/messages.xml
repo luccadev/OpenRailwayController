@@ -9015,7 +9015,7 @@
   </Msg>
   <Msg id="locseldlg">
     <de txt="Lok Auswahl"/>
-    <en txt="Loc Selection"/>
+    <en txt="Loc Selection" alttxt="Mobile Selection"/>
     <nl txt="Loc keuze"/>
     <sv txt="Lokval"/>
     <fr txt="Sélection de la locomotive"/>
