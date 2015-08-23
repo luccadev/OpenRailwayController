@@ -87,6 +87,7 @@ public:
   void aboxRoadname( wxMouseEvent& event );
   void aboxCatNr( wxMouseEvent& event );
   void aboxIdent( wxMouseEvent& event );
+  void aboxOwner( wxMouseEvent& event );
 };
 
 #endif // __cardlg__

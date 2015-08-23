@@ -182,7 +182,7 @@ void CarDlg::initLabels() {
   m_Era->SetLabel( wxGetApp().getMsg( "era" ) );
   m_labLocation->SetLabel( wxGetApp().getMsg( "place" ) );
   m_labImageName->SetLabel( wxGetApp().getMsg( "image" ) );
-  m_labOwner->SetLabel( wxGetApp().getMsg( "owner" ) );
+  m_labOwner->SetLabel( wxGetApp().getMsg( "owner" ) + wxT(" @") );
 
   m_Status->SetLabel( wxGetApp().getMsg( "status" ) );
   m_Status->SetString( 0, wxGetApp().getMsg( "empty" ) );
@@ -1349,3 +1349,8 @@ void CarDlg::aboxRoadname( wxMouseEvent& event ) {
 void CarDlg::aboxIdent( wxMouseEvent& event ) {
   ABox(m_Ident, wxGetApp().getCMsg( "identifier" ));
 }
+
+void CarDlg::aboxOwner( wxMouseEvent& event ) {
+  ABox(m_Owner, wxGetApp().getCMsg( "owner" ));
+}
+

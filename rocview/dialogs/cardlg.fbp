@@ -1722,7 +1722,7 @@
                                                     <property name="font"></property>
                                                     <property name="hidden">0</property>
                                                     <property name="id">wxID_ANY</property>
-                                                    <property name="label">Owner</property>
+                                                    <property name="label">Owner @</property>
                                                     <property name="maximum_size"></property>
                                                     <property name="minimum_size"></property>
                                                     <property name="name">m_labOwner</property>
@@ -1749,7 +1749,7 @@
                                                     <event name="OnLeaveWindow"></event>
                                                     <event name="OnLeftDClick"></event>
                                                     <event name="OnLeftDown"></event>
-                                                    <event name="OnLeftUp"></event>
+                                                    <event name="OnLeftUp">aboxOwner</event>
                                                     <event name="OnMiddleDClick"></event>
                                                     <event name="OnMiddleDown"></event>
                                                     <event name="OnMiddleUp"></event>
