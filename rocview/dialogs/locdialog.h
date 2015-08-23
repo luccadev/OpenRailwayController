@@ -77,7 +77,7 @@ class wxGrid;
 #define ID_BUTTON_SHOWDOC 10391
 #define wxID_STATIC_PURCHASED 10021
 #define ID_TEXTCTRL_PURCHASED 10009
-#define ID_STATICTEXT 10063
+#define ID_ABOX_IDENT 10501
 #define ID_STATICTEXT1 10064
 #define ID_LC_SERVICED 10313
 #define ID_LOC_ACTIONS 10380
@@ -282,6 +282,9 @@ public:
 
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON_SHOWDOC
     void OnButtonShowdocClick( wxCommandEvent& event );
+
+    /// wxEVT_LEFT_UP event handler for ID_ABOX_IDENT
+    void OnAboxIdent( wxMouseEvent& event );
 
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_LC_SERVICED
     void OnLcServicedClick( wxCommandEvent& event );

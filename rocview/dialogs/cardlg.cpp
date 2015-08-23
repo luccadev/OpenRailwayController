@@ -175,7 +175,7 @@ void CarDlg::initLabels() {
 
   // General
   m_labID->SetLabel( wxGetApp().getMsg( "id" ) + wxT(" @"));
-  m_labIdent->SetLabel( wxGetApp().getMsg( "identifier" ) );
+  m_labIdent->SetLabel( wxGetApp().getMsg( "identifier" ) + wxT(" @") );
   m_labNumber->SetLabel( wxGetApp().getMsg( "number" ) );
   m_labRoadname->SetLabel( wxGetApp().getMsg( "roadname" ) + wxT(" @") );
   m_labColor->SetLabel( wxGetApp().getMsg( "color" ) );
@@ -1344,4 +1344,8 @@ void CarDlg::aboxCatNr( wxMouseEvent& event ) {
 
 void CarDlg::aboxRoadname( wxMouseEvent& event ) {
   ABox(m_Roadname, wxGetApp().getCMsg( "roadname" ));
+}
+
+void CarDlg::aboxIdent( wxMouseEvent& event ) {
+  ABox(m_Ident, wxGetApp().getCMsg( "identifier" ));
 }
