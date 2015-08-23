@@ -271,6 +271,12 @@ void ABoxDlg::onAdd( wxCommandEvent& event ) {
 }
 
 void ABoxDlg::executeStub(const char* filepath) {
+  if( !FileOp.exist(filepath) ) {
+    char* tip = StrOp.fmt( wxGetApp().getCMsg("filenotfound"), filepath );
+    int action = wxMessageDialog( this, wxString(tip,wxConvUTF8), _T("Rocrail"), wxOK | wxICON_EXCLAMATION ).ShowModal();
+    StrOp.free(tip);
+    return;
+  }
   const char* ext = StrOp.getExtension(filepath);
   iONode theAboxApp = NULL;
   iONode aboxapp = wABox.getaboxapp(m_Ini);
@@ -880,7 +886,7 @@ void ABoxDlg::onSelectApp( wxCommandEvent& event ) {
       NodeOp.addChild( m_Ini, theAboxApp);
     }
     wABoxApp.setapp(theAboxApp, fdlg->GetPath().mb_str(wxConvUTF8) );
-
+    executeStub(NodeOp.getStr(stub, "path", "-"));
   }
   fdlg->Destroy();
   Raise();
