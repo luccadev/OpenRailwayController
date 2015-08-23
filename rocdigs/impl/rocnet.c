@@ -1619,7 +1619,7 @@ static byte* __evaluateSensor( iOrocNet rocnet, byte* rn ) {
         wFeedback.setidentifier( evt, ident );
     }
 
-    load = (rn[RN_PACKET_LEN] > 4 ? rn[RN_PACKET_DATA+4]:0);
+    load = (rn[RN_PACKET_LEN] == 5 ? rn[RN_PACKET_DATA+4]:0);
     wFeedback.setload( evt, load );
 
     TraceOp.trc( name, TRCLEVEL_MONITOR, __LINE__, 9999, "sensor report %d:%d %s id(ent)=%s load=%d", sndr, addr, rn[RN_PACKET_DATA+2]?"on":"off", ident, load );

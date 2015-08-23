@@ -69,7 +69,7 @@ void SensorEventsDlg::initLabels() {
   m_EventList->InsertColumn(11, wxT( "GPS" ), wxLIST_FORMAT_LEFT );
   m_Refresh->SetLabel(wxGetApp().getMsg( "refresh" ));
   m_Reset->SetLabel(wxGetApp().getMsg( "reset" ));
-  m_AssignIdent->SetLabel(wxGetApp().getMsg( "assignident" ));
+  m_AssignIdent->SetLabel(wxGetApp().getMsg( "assignident" ) + wxT("..."));
 }
 
 static bool m_bSortInvert = false;

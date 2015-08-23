@@ -10882,7 +10882,7 @@
   </Msg>
   <Msg id="refresh">
     <de txt="aktualisieren"/>
-    <en txt="refresh"/>
+    <en txt="refresh" alttxt="Refresh"/>
     <nl txt="vernieuwen"/>
     <sv txt="Uppdatering"/>
     <fr txt="actualiser"/>
