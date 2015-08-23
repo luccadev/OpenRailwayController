@@ -8105,3 +8105,9 @@ msgstr ""
 msgid "Assign identifier"
 msgstr ""
 
+#. 
+# id="findident"
+#, c-format
+msgid "Find identifier"
+msgstr ""
+

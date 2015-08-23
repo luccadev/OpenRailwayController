@@ -39,6 +39,7 @@ class SensorEventsDlg : public SensorEventsGen
 		bool Validate();
 		void onHelp( wxCommandEvent& event );
 		void onAssign( wxCommandEvent& event ) ;
+		void onFindIdent( wxCommandEvent& event );
 };
 
 #endif // __sensorevents__

@@ -31844,4 +31844,7 @@
   <Msg id="assignident">
     <en txt="Assign identifier"/>
   </Msg>
+  <Msg id="findident">
+    <en txt="Find identifier"/>
+  </Msg>
 </Messages>

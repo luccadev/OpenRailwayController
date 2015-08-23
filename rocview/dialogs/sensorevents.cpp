@@ -21,6 +21,7 @@
 #include "rocrail/wrapper/public/Loc.h"
 #include "rocrail/wrapper/public/Car.h"
 #include "rocrail/wrapper/public/ModelCmd.h"
+#include "rocrail/wrapper/public/Plan.h"
 
 #include "rocs/public/trace.h"
 
@@ -50,6 +51,7 @@ SensorEventsDlg::SensorEventsDlg( wxWindow* parent )
 
   m_Reset->Enable(false);
   m_AssignIdent->Enable(false);
+  m_FindIdent->Enable(false);
 }
 
 
@@ -70,6 +72,7 @@ void SensorEventsDlg::initLabels() {
   m_Refresh->SetLabel(wxGetApp().getMsg( "refresh" ));
   m_Reset->SetLabel(wxGetApp().getMsg( "reset" ));
   m_AssignIdent->SetLabel(wxGetApp().getMsg( "assignident" ) + wxT("..."));
+  m_FindIdent->SetLabel(wxGetApp().getMsg( "findident" ) + wxT("..."));
 }
 
 static bool m_bSortInvert = false;
@@ -324,6 +327,7 @@ void SensorEventsDlg::onListSelected( wxListEvent& event ) {
   m_FbEvent = (iONode)m_EventList->GetItemData(index);
   m_Reset->Enable(true);
   m_AssignIdent->Enable(true);
+  m_FindIdent->Enable(true);
 }
 
 
@@ -337,6 +341,7 @@ void SensorEventsDlg::onReset( wxCommandEvent& event ) {
     cmd->base.del(cmd);
     m_Reset->Enable(false);
     m_AssignIdent->Enable(false);
+    m_FindIdent->Enable(false);
     m_FbEvent = NULL;
   }
 }
@@ -372,7 +377,7 @@ void SensorEventsDlg::onHelp( wxCommandEvent& event ) {
 void SensorEventsDlg::onAssign( wxCommandEvent& event ) {
   if( m_FbEvent == NULL )
     return;
-  // ToDo: Assign the identifier of the selected event to Loco or Car...
+  // Assign the identifier of the selected event to Loco or Car...
   LocSelDlg*  dlg = new LocSelDlg(this, NULL, false, NULL, true, true );
 
   if( wxID_OK == dlg->ShowModal() ) {
@@ -401,6 +406,51 @@ void SensorEventsDlg::onAssign( wxCommandEvent& event ) {
   }
   dlg->Destroy();
   Raise();
+}
+
+
+void SensorEventsDlg::onFindIdent( wxCommandEvent& event ) {
+  if( m_FbEvent == NULL )
+    return;
+
+  const char* ident = wFeedback.getidentifier(m_FbEvent);
+  if( ident == NULL || StrOp.len(ident) == 0 )
+    return;
+
+  iONode mobile = NULL;
+  iONode model = wxGetApp().getModel();
+  if( model != NULL ) {
+    iONode lclist = wPlan.getlclist( model );
+    iONode carlist = wPlan.getcarlist( model );
+    if( lclist != NULL ) {
+      int cnt = NodeOp.getChildCnt( lclist );
+      for( int i = 0; i < cnt; i++ ) {
+        iONode lc = NodeOp.getChild( lclist, i );
+        if( StrOp.equals( ident, wLoc.getidentifier(lc) )) {
+          mobile = lc;
+          break;
+        }
+      }
+    }
+    if( mobile == NULL && carlist != NULL ) {
+      int cnt = NodeOp.getChildCnt( carlist );
+      for( int i = 0; i < cnt; i++ ) {
+        iONode car = NodeOp.getChild( carlist, i );
+        if( StrOp.equals( ident, wCar.getident(car) )) {
+          mobile = car;
+          break;
+        }
+      }
+    }
+  }
+
+  if( mobile != NULL ) {
+    LocSelDlg*  dlg = new LocSelDlg(this, mobile, false, NULL, true, true );
+    dlg->ShowModal();
+    dlg->Destroy();
+    Raise();
+  }
+
 }
 
 
