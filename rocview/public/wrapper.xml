@@ -144,6 +144,10 @@
       <var name="findinfilename" vt="bool" defval="true"/>
       <var name="findindate" vt="bool" defval="false"/>
       <var name="link" vt="bool" defval="true"/>
+      <aboxapp cardinality="n" wrappername="ABoxApp">
+        <var name="ext" vt="string" defval=""/>
+        <var name="app" vt="string" defval=""/>
+      </aboxapp>
     </abox>    
     <workspaces cardinality="1" wrappername="WorkSpaces">
       <workspace cardinality="n" wrappername="WorkSpace">

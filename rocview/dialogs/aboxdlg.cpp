@@ -21,6 +21,7 @@
 #include "rocview/public/guiapp.h"
 #include "rocview/wrapper/public/Gui.h"
 #include "rocview/wrapper/public/ABox.h"
+#include "rocview/wrapper/public/ABoxApp.h"
 
 #include "rocrail/wrapper/public/DataReq.h"
 #include "rocrail/wrapper/public/DirEntry.h"
@@ -61,6 +62,7 @@ ABoxDlg::ABoxDlg( wxWindow* parent, const char* text, const char* title ):AboxDl
   m_Link->SetValue(wABox.islink(m_Ini)?true:false);
 
   m_Open->Enable(false);
+  m_SelectApp->Enable(false);
   m_Modify->Enable(false);
   m_Delete->Enable(false);
   //m_Link->Enable(false); // only links are supported
@@ -109,6 +111,7 @@ void ABoxDlg::initLabels() {
   m_labToDate->SetLabel( wxGetApp().getMsg( "todate" ) );
   m_Add->SetLabel( wxGetApp().getMsg( "add" ) );
   m_Open->SetLabel( wxGetApp().getMsg( "open" ) );
+  m_SelectApp->SetLabel( wxGetApp().getMsg( "select" ) + wxT("...") );
   m_Modify->SetLabel( wxGetApp().getMsg( "modify" ) );
   m_Delete->SetLabel( wxGetApp().getMsg( "delete" ) );
   m_labFile->SetLabel( wxGetApp().getMsg( "file" ) );
@@ -146,6 +149,7 @@ void ABoxDlg::EnableDlg(bool enable) {
   else
     m_Add->Enable(enable);
   m_Open->Enable(enable);
+  m_SelectApp->Enable(enable);
   m_Modify->Enable(enable);
   m_Delete->Enable(enable);
   m_Stubs->Enable(enable);
@@ -267,6 +271,21 @@ void ABoxDlg::onAdd( wxCommandEvent& event ) {
 }
 
 void ABoxDlg::executeStub(const char* filepath) {
+  const char* ext = StrOp.getExtension(filepath);
+  iONode theAboxApp = NULL;
+  iONode aboxapp = wABox.getaboxapp(m_Ini);
+  while(aboxapp != NULL) {
+    if( StrOp.equalsi(wABoxApp.getext(aboxapp), ext ) ) {
+      theAboxApp = aboxapp;
+      break;
+    }
+    aboxapp = wABox.nextaboxapp(m_Ini, aboxapp);
+  }
+  if( theAboxApp != NULL ) {
+    wxExecute(wxString(wABoxApp.getapp(theAboxApp),wxConvUTF8) + wxT(" \"") + wxString(filepath,wxConvUTF8) + wxT("\"") );
+    return;
+  }
+
   wxFileType *filetype=wxTheMimeTypesManager->GetFileTypeFromExtension(wxString(StrOp.getExtension(filepath),wxConvUTF8));
   if( filetype == NULL ) {
     char* tip = StrOp.fmt( wxGetApp().getCMsg("nodefaultapplicationfound"), filepath );
@@ -379,6 +398,7 @@ void ABoxDlg::showStub() {
 void ABoxDlg::onStubActivated( wxListEvent& event ) {
   m_SelectedStub = event.GetIndex();
   m_Open->Enable(true);
+  m_SelectApp->Enable(true);
   m_Modify->Enable(!m_ReadOnly);
   m_Delete->Enable(!m_ReadOnly);
   openStub();
@@ -387,6 +407,7 @@ void ABoxDlg::onStubActivated( wxListEvent& event ) {
 void ABoxDlg::onStubSelected( wxListEvent& event ) {
   m_SelectedStub = event.GetIndex();
   m_Open->Enable(true);
+  m_SelectApp->Enable(true);
   m_Modify->Enable(!m_ReadOnly);
   m_Delete->Enable(!m_ReadOnly);
   showStub();
@@ -697,6 +718,7 @@ void ABoxDlg::event(iONode node) {
   else if( wDataReq.getcmd(node) == wDataReq.abox_find ) {
     m_SelectedStub = wxNOT_FOUND;
     m_Open->Enable(false);
+    m_SelectApp->Enable(false);
     m_Modify->Enable(false);
     m_Delete->Enable(false);
     m_Stubs->DeleteAllItems();
@@ -833,4 +855,37 @@ void ABoxDlg::onBmpOpen( wxMouseEvent& event ) {
   wxCommandEvent cmdEvent;
   onOpen(cmdEvent);
 }
+
+void ABoxDlg::onSelectApp( wxCommandEvent& event ) {
+  if( m_SelectedStub == wxNOT_FOUND )
+    return;
+
+  iONode stub = (iONode)m_Stubs->GetItemData(m_SelectedStub);
+  const char* ext = StrOp.getExtension(NodeOp.getStr(stub, "path", "-"));
+
+  wxFileDialog* fdlg = new wxFileDialog(this);
+  if( fdlg->ShowModal() == wxID_OK ) {
+    iONode theAboxApp = NULL;
+    iONode aboxapp = wABox.getaboxapp(m_Ini);
+    while(aboxapp != NULL) {
+      if( StrOp.equalsi(wABoxApp.getext(aboxapp), ext ) ) {
+        theAboxApp = aboxapp;
+        break;
+      }
+      aboxapp = wABox.nextaboxapp(m_Ini, aboxapp);
+    }
+    if( theAboxApp == NULL ) {
+      theAboxApp = NodeOp.inst(wABoxApp.name(), m_Ini, ELEMENT_NODE);
+      wABoxApp.setext(theAboxApp, ext);
+      NodeOp.addChild( m_Ini, theAboxApp);
+    }
+    wABoxApp.setapp(theAboxApp, fdlg->GetPath().mb_str(wxConvUTF8) );
+
+  }
+  fdlg->Destroy();
+  Raise();
+
+
+}
+
 
