@@ -111,7 +111,7 @@ void ABoxDlg::initLabels() {
   m_labToDate->SetLabel( wxGetApp().getMsg( "todate" ) );
   m_Add->SetLabel( wxGetApp().getMsg( "add" ) );
   m_Open->SetLabel( wxGetApp().getMsg( "open" ) );
-  m_SelectApp->SetLabel( wxGetApp().getMsg( "select" ) + wxT("...") );
+  m_SelectApp->SetLabel( wxGetApp().getMsg( "selectviewer" ) + wxT("...") );
   m_Modify->SetLabel( wxGetApp().getMsg( "modify" ) );
   m_Delete->SetLabel( wxGetApp().getMsg( "delete" ) );
   m_labFile->SetLabel( wxGetApp().getMsg( "file" ) );

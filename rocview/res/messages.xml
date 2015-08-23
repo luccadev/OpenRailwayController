@@ -10849,7 +10849,7 @@
   </Msg>
   <Msg id="modify">
     <de txt="Ändern"/>
-    <en txt="modify"/>
+    <en txt="modify" alttxt="Modify"/>
     <nl txt="wijzigen"/>
     <sv txt="Ändra"/>
     <fr txt="changer"/>
@@ -31849,5 +31849,8 @@
   </Msg>
   <Msg id="filenotfound">
     <en txt="File [%s] not found."/>
+  </Msg>
+  <Msg id="selectviewer">
+    <en txt="Select viewer"/>
   </Msg>
 </Messages>

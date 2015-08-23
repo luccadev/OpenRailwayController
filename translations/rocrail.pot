@@ -8117,3 +8117,9 @@ msgstr ""
 msgid "File [%s] not found."
 msgstr ""
 
+#. 
+# id="selectviewer"
+#, c-format
+msgid "Select viewer"
+msgstr ""
+
