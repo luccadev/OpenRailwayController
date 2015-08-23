@@ -69,11 +69,12 @@ class LocSelDlg: public wxDialog
   bool m_MICmode;
   const char* m_LocID;
   bool m_AddCars;
+  bool m_AddAll;  // including cars without an interface address
 
 public:
     /// Constructors
     LocSelDlg( );
-    LocSelDlg( wxWindow* parent, iONode locprops=NULL, bool mic=false, const char* locid=NULL, bool cars=false );
+    LocSelDlg( wxWindow* parent, iONode locprops=NULL, bool mic=false, const char* locid=NULL, bool cars=false, bool all=false );
 
     iONode getProperties(){ return m_Props;}
     void SelectNext();

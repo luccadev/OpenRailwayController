@@ -373,7 +373,7 @@ void SensorEventsDlg::onAssign( wxCommandEvent& event ) {
   if( m_FbEvent == NULL )
     return;
   // ToDo: Assign the identifier of the selected event to Loco or Car...
-  LocSelDlg*  dlg = new LocSelDlg(this, NULL, false, NULL, true );
+  LocSelDlg*  dlg = new LocSelDlg(this, NULL, false, NULL, true, true );
 
   if( wxID_OK == dlg->ShowModal() ) {
     iONode l_Props = dlg->getProperties();

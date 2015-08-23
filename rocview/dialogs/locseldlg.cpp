@@ -85,13 +85,15 @@ LocSelDlg::LocSelDlg( )
 {
 }
 
-LocSelDlg::LocSelDlg( wxWindow* parent, iONode props, bool mic, const char* locid, bool cars )
+LocSelDlg::LocSelDlg( wxWindow* parent, iONode props, bool mic, const char* locid, bool cars, bool all )
 {
   m_Props = props;
   m_MICmode = mic;
   m_MICini = NULL;
   m_LocID = locid;
   m_AddCars = cars;
+  m_AddAll  = all;
+
   if( m_MICmode ) {
     m_MICini = wGui.getmic( wxGetApp().getIni() );
     if( m_MICini == NULL ) {
@@ -238,7 +240,7 @@ void LocSelDlg::InitIndex() {
       for( int i = 0; i < cnt; i++ ) {
         iONode lc = NodeOp.getChild( lclist, i );
         const char* id = wLoc.getid( lc );
-        if( id != NULL && wLoc.isshow(lc) ) {
+        if( wLoc.isshow(lc) || m_AddAll ) {
           ListOp.add( list, (obj)lc );
         }
       }
@@ -246,8 +248,8 @@ void LocSelDlg::InitIndex() {
         int cnt = NodeOp.getChildCnt( carlist );
         for( int i = 0; i < cnt; i++ ) {
           iONode car = NodeOp.getChild( carlist, i );
-          if( wCar.getaddr(car) > 0 ) {
-            if( wCar.isshow(car) )
+          if( wCar.getaddr(car) > 0 || m_AddAll) {
+            if( wCar.isshow(car) || m_AddAll )
               ListOp.add( list, (obj)car );
           }
         }
