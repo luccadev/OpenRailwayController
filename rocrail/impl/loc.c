@@ -64,6 +64,7 @@ static void __initBBTmap( iOLoc loc );
 static void __initSBTmap( iOLoc loc );
 static void __initCVmap( iOLoc loc );
 static Boolean __loadDriver( iOLoc inst );
+static void __handleBBTevent(iOLoc inst, int event, obj emitter, int timer);
 
 /*
  ***** OBase functions.
@@ -2104,6 +2105,7 @@ static void __runner( void* threadinst ) {
       event   = MsgOp.getEvent( msg );
       type    = MsgOp.getUsrDataType( msg );
       udata   = MsgOp.getUsrData(msg);
+      timer   = MsgOp.getTimer(msg);
       msg->base.del( msg );
       TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "new message %d nrruns=%d", event, data->nrruns );
     }
@@ -2138,6 +2140,11 @@ static void __runner( void* threadinst ) {
         data->driver->drive( data->driver, emitter, event );
       }
     }
+
+    if( event != -1 ) {
+      __handleBBTevent(loc, event, emitter, timer);
+    }
+
 
     if( ThreadOp.hasPost( th ) ) {
       TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "more messages available..." );
@@ -2363,22 +2370,10 @@ static void __funEvent( iOLoc inst, const char* blockid, int evt, int timer ) {
   }
 }
 
-static void _event( iOLoc inst, obj emitter, int evt, int timer, Boolean forcewait, const char* id ) {
+static void __handleBBTevent(iOLoc inst, int evt, obj emitter, int timer) {
   iOLocData data = Data(inst);
-  iOMsg msg = MsgOp.inst( emitter, evt );
-  iIBlockBase block = (iIBlockBase)MsgOp.getSender(msg);
+  iIBlockBase block = (iIBlockBase)emitter;
   const char* blockid = block!=NULL ? block->base.id( block ):"?";
-
-  data->curSensor = id;
-
-  if( emitter == (obj)data->driver ) {
-    __checkAction(inst, id, "");
-    return;
-  }
-
-  if( id != NULL && StrOp.len(id) > 0 && StrOp.equals("eventtimeout", id) ) {
-    __checkAction(inst, "eventtimeout", "" );
-  }
 
   if( evt == enter_event && block != NULL && !StrOp.equals(blockid, data->sbtEnterBlock) ) {
     iONode sbt = NULL;
@@ -2460,6 +2455,27 @@ static void _event( iOLoc inst, obj emitter, int evt, int timer, Boolean forcewa
     TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "BBT block=%s does not allow BBT", blockid );
     LocOp.resetBBT(inst);
   }
+}
+
+
+static void _event( iOLoc inst, obj emitter, int evt, int timer, Boolean forcewait, const char* id ) {
+  iOLocData data = Data(inst);
+  iOMsg msg = MsgOp.inst( emitter, evt );
+  iIBlockBase block = (iIBlockBase)MsgOp.getSender(msg);
+  const char* blockid = block!=NULL ? block->base.id( block ):"?";
+
+  data->curSensor = id;
+
+  if( emitter == (obj)data->driver ) {
+    __checkAction(inst, id, "");
+    msg->base.del( msg );
+    return;
+  }
+
+  if( id != NULL && StrOp.len(id) > 0 && StrOp.equals("eventtimeout", id) ) {
+    __checkAction(inst, "eventtimeout", "" );
+  }
+
 
   if( data->runner != NULL ) {
     TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999,
