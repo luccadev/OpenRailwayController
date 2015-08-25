@@ -30819,7 +30819,7 @@
     <pt_BR txt="Condições do tempo" tip="Configuração das condições do tempo"/>
     <fr txt="Météo" tip="Paramétrage du climat"/>
     <be txt="Надвор'е" tip="Налады надвор'я"/>
-    <es txt="Metereología" tip="Configuaración de meteorologia"/>
+    <es txt="Meteorología" tip="Configuración de meteorología"/>
     <pl txt="Pogoda"/>
   </Msg>
   <Msg id="outputs">
@@ -31426,6 +31426,7 @@
     <en_GB txt="Shunting divider"/>
     <ru txt="Маневровый делитель"/>
     <es txt="Separador de shuntado"/>
+    <it txt="Sganciatore"/>
   </Msg>
   <Msg id="allconditions">
     <en txt="All conditions must be true"/>
@@ -31690,6 +31691,7 @@
     <pt_BR txt="Hora Origem"/>
     <sl txt="Od ure"/>
     <sr_latin txt="Iz sata"/>
+    <it txt="Dalle ore"/>
   </Msg>
   <Msg id="tohour">
     <en txt="To hour"/>
@@ -31699,6 +31701,7 @@
     <pt_BR txt="Hora Destino"/>
     <sl txt="Do ure"/>
     <sr_latin txt="U sat"/>
+    <it txt="Alle ore"/>
   </Msg>
   <Msg id="fixall">
     <en txt="Fix all"/>
@@ -31717,6 +31720,7 @@
     <pt_BR txt="Caminho XmlScript"/>
     <sl txt="XmlScript pot"/>
     <sr_latin txt="Putanja Xmlskripta"/>
+    <it txt="Percorso XmlScript"/>
   </Msg>
   <Msg id="togglefix">
     <en txt="Toggle fix"/>
@@ -31735,6 +31739,7 @@
     <pt_BR txt="Encontrar"/>
     <sl txt="Najdi"/>
     <sr_latin txt="Nađi"/>
+    <it txt="Trova"/>
   </Msg>
   <Msg id="category">
     <en txt="Category"/>
@@ -31744,6 +31749,7 @@
     <pt_BR txt="Categoria"/>
     <sl txt="Kategorija"/>
     <sr_latin txt="Kategorija"/>
+    <it txt="Categoria"/>
   </Msg>
   <Msg id="link">
     <en txt="Link"/>
@@ -31753,6 +31759,7 @@
     <pt_BR txt="Conectar"/>
     <sl txt="Povezava"/>
     <sr_latin txt="Veza"/>
+    <it txt="Link"/>
   </Msg>
   <Msg id="missingcriteria">
     <en txt="Missing criteria; Check all input fields."/>
@@ -31780,6 +31787,7 @@
     <pt_BR txt="Recado"/>
     <sl txt="Beležka"/>
     <sr_latin txt="Napomena"/>
+    <it txt="Nota"/>
   </Msg>
   <Msg id="filename">
     <en txt="Filename"/>
@@ -31789,6 +31797,7 @@
     <pt_BR txt="Nome do arquivo"/>
     <sl txt="Ime datoteke"/>
     <sr_latin txt="Ime fajla"/>
+    <it txt="Nome File"/>
   </Msg>
   <Msg id="showpath">
     <en txt="Show path"/>
@@ -31798,6 +31807,7 @@
     <pt_BR txt="Exibir Caminho"/>
     <sl txt="Prikaži pot"/>
     <sr_latin txt="Pokaži putanju"/>
+    <it txt="Mostra percorso"/>
   </Msg>
   <Msg id="date">
     <en txt="Date"/>
@@ -31807,6 +31817,7 @@
     <pt_BR txt="Data"/>
     <sl txt="Datum"/>
     <sr_latin txt="Datum"/>
+    <it txt="Data"/>
   </Msg>
   <Msg id="toomanyhits">
     <en txt="Too many hits; Reduce selection by search criteria."/>
@@ -31819,38 +31830,103 @@
   </Msg>
   <Msg id="fromdate">
     <en txt="From date" alttxt="From"/>
+    <de txt="Von"/>
+    <es txt="De fecha"/>
+    <nl txt="Vanaf"/>
+    <pt_BR txt="A partir da data"/>
+    <sl txt="Od datuma"/>
+    <sr_latin txt="Od datuma"/>
   </Msg>
   <Msg id="todate">
     <en txt="To date" alttxt="To"/>
+    <de txt="Bis"/>
+    <es txt="A fecha"/>
+    <nl txt="Tot"/>
+    <pt_BR txt="Até a data"/>
+    <sl txt="Do datuma"/>
+    <sr_latin txt="Do datuma"/>
   </Msg>
   <Msg id="nodefaultapplicationfound">
     <en txt="No default application found for [%s]."/>
+    <de txt="Keine Standard-Anwendung für [%s] gefunden."/>
+    <es txt="No se ha encontrado aplicación por defecto para [%s]."/>
+    <nl txt="Geen programma gevonden voor [%s]."/>
+    <pt_BR txt="Nenhum aplicativo padrão encontrado para [%s]."/>
+    <sl txt="Ne najdem privzete aplikacije za [%s]."/>
+    <sr_latin txt="Nije nađena tekuća aplikacija za [%s]."/>
   </Msg>
   <Msg id="downloadingfile">
     <en txt="Downloading file [%s]."/>
+    <de txt="Datei [%s] wird heruntergeladen."/>
+    <es txt="Descargando archivo [%s]"/>
+    <nl txt="Bestand [%s] wordt gedownload."/>
+    <pt_BR txt="Recebendo arquivo [%s]."/>
+    <sl txt="Prenesi datoteko [%s]."/>
+    <sr_latin txt="Preuzimanje fajla [%s]."/>
   </Msg>
   <Msg id="uploadingfile">
     <en txt="Uploading file [%s]."/>
+    <de txt="Datei [%s] wird hochgeladen."/>
+    <es txt="Subiendo archivo [%s]"/>
+    <nl txt="Bestand [%s] wordt geupload."/>
+    <pt_BR txt="Enviando arquivo [%s]."/>
+    <sl txt="Naloži datoteko [%s]."/>
+    <sr_latin txt="Dodavanje fajla [%s]."/>
   </Msg>
   <Msg id="assembletrain">
     <en txt="Assemble train"/>
+    <de txt="Zug zusammenstellen"/>
+    <es txt="Ensamblado de tren"/>
+    <nl txt="Trein samenstellen"/>
+    <pt_BR txt="Montagem do trem"/>
+    <sl txt="Sestavi vlak"/>
   </Msg>
   <Msg id="startassembletrain">
     <en txt="Start assemble train"/>
+    <de txt="Zug zusammenstellen starten"/>
+    <es txt="Empezar ensamblado de tren"/>
+    <nl txt="Start trein samenstellen"/>
+    <pt_BR txt="Iniciar a montagem do trem"/>
+    <sl txt="Začni sestavljanje vlaka"/>
   </Msg>
   <Msg id="stopassembletrain">
     <en txt="Stop assemble train"/>
+    <de txt="Zug zusammenstellen stoppen"/>
+    <es txt="Parar ensamblado de tren"/>
+    <nl txt="Stop trein samenstellen"/>
+    <pt_BR txt="Parar a montagem do trem"/>
+    <sl txt="Končaj sestavljanje vlaka"/>
   </Msg>
   <Msg id="assignident">
     <en txt="Assign identifier"/>
+    <de txt="Identifizierer zuordnen"/>
+    <es txt="Asignar identificador"/>
+    <nl txt="Identiteit toewijzen"/>
+    <pt_BR txt="Atribuir identificador"/>
+    <sl txt="Določi identifikator"/>
   </Msg>
   <Msg id="findident">
     <en txt="Find identifier"/>
+    <de txt="Identifizierer suchen."/>
+    <es txt="Buscar identificador"/>
+    <nl txt="Zoek indentificatie"/>
+    <pt_BR txt="Encontrar identificador"/>
+    <sl txt="Najdi identifikator"/>
   </Msg>
   <Msg id="filenotfound">
     <en txt="File [%s] not found."/>
+    <de txt="Datei [%s] nicht gefunden."/>
+    <es txt="Archivo [%s] no encontado"/>
+    <nl txt="Bestand [%s] niet gevonden."/>
+    <pt_BR txt="Arquivo [%s] não encontrado."/>
+    <sl txt="Ne najdem datoteke [%s]."/>
   </Msg>
   <Msg id="selectviewer">
     <en txt="Select viewer"/>
+    <de txt="Betrachter auswählen..."/>
+    <es txt="Seleccionar visor"/>
+    <nl txt="Selecteer programma"/>
+    <pt_BR txt="Selecionar visualizador"/>
+    <sl txt="Izberi pregledovalnik"/>
   </Msg>
 </Messages>
