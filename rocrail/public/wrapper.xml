@@ -1575,6 +1575,7 @@
     <var name="atevt" vt="bool" defval="false" remark="Activate at events."/>
     <var name="deact" vt="string" defval="none" range="none,enter,in" remark="Deactivation event."/>
     <var name="callerid" vt="string" defval="" range="*" remark="ID of the caller object."/>
+    <var name="identifier" vt="string" defval="" range="*"/>
     <var name="lcid" vt="string" defval="" range="*"/>
     <var name="lcclass" vt="string" defval="" range="*"/>
     <var name="bkid" vt="string" defval="" range="*"/>

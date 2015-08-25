@@ -129,7 +129,7 @@ static void __ctcAction( iOFBack inst ) {
 }
 
 
-static void __checkAction( iOFBack inst ) {
+static void __checkAction( iOFBack inst, const char* identifier ) {
   iOFBackData data     = Data(inst);
   iOModel     model    = AppOp.getModel();
   iONode      fbaction = wFeedback.getactionctrl( data->props );
@@ -160,6 +160,8 @@ static void __checkAction( iOFBack inst ) {
       wActionCtrl.setcarcount(fbaction, data->carcount );
       wActionCtrl.setcountedcars(fbaction, data->countedcars );
       wActionCtrl.setwheelcount(fbaction, data->wheelcount );
+      if( identifier != NULL )
+        wActionCtrl.setidentifier(fbaction, identifier );
       if( FBackOp.getIdentifier(inst) != NULL && StrOp.len(FBackOp.getIdentifier(inst)) > 0 )
         wActionCtrl.setlcid(fbaction, FBackOp.getIdentifier(inst));
 
@@ -381,7 +383,7 @@ static Boolean _cmd( iOFBack inst, iONode cmd, Boolean update ) {
     iONode clone = (iONode)NodeOp.base.clone( data->props );
     wFeedback.setcounter( clone, data->counter);
     AppOp.broadcastEvent( clone );
-    __checkAction(inst);
+    __checkAction(inst, NULL);
   }
   else {
     if( wFeedback.getfbtype(data->props) == wFeedback.fbtype_wheelcounter && wFeedback.isstate(cmd) )
@@ -504,7 +506,7 @@ static void _event( iOFBack inst, iONode nodeC ) {
       data->countedcars++;
       TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999, "[%s] COUNTING CARS: carcount=%d countedcars=%d",
           FBackOp.getId(inst), data->carcount, data->countedcars );
-      __checkAction( inst );
+      __checkAction( inst, NULL );
     }
   }
 
@@ -583,7 +585,7 @@ static void _event( iOFBack inst, iONode nodeC ) {
 
   __ctcAction( inst );
   if( stateDidChange )
-    __checkAction( inst );
+    __checkAction( inst, wFeedback.getidentifier(nodeC) );
 
   if(!hasListener) {
     TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "fb[%s] (%s) ident=%s val=%d count=%d has no listener...",
@@ -873,7 +875,7 @@ static void _doTimedOff( iOFBack inst ) {
       }
 
       __ctcAction( inst );
-      __checkAction( inst );
+      __checkAction( inst, NULL );
 
       /* Broadcast to clients. Node4 */
       wFeedback.setid( nodeD, FBackOp.getId( inst ) );

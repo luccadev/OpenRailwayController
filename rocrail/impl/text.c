@@ -211,6 +211,7 @@ static char* __addActionProperties(iOMap map, iONode node) {
   MapOp.put(map, "callerid", (obj)NodeOp.getStr(node, "refcallerid", "-") );
   MapOp.put(map, "state", (obj)NodeOp.getStr(node, "state", "") );
   MapOp.put(map, "substate", (obj)NodeOp.getStr(node, "substate", "") );
+  MapOp.put(map, "identifier", (obj)NodeOp.getStr(node, "identifier", "") );
 
   MapOp.put(map, "load", (obj)NodeOp.getStr(node, "load", "0"));
   MapOp.put(map, "volt", (obj)NodeOp.getStr(node, "volt", "0"));
