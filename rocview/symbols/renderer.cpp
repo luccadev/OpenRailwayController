@@ -2669,6 +2669,28 @@ void SymbolRenderer::drawSelTab( wxPaintDC& dc, bool occupied, const char* ori )
 /**
  * Text object
  */
+void SymbolRenderer::drawTextBorder(wxPaintDC& dc, bool occupied, const char* ori) {
+  if( wText.isborder(m_Props) ) {
+    wxPen* pen = getPen(NULL);
+    pen->SetWidth(1);
+    setPen( *pen );
+    setBrush( *wxTRANSPARENT_BRUSH );
+    if( m_UseGC ) {
+      if( StrOp.equals( ori, wItem.south ) || StrOp.equals( ori, wItem.north ) )
+        m_GC->DrawRectangle(0,0,(wText.getcy(m_Props) * 32)-1, (wText.getcx(m_Props) * 32)-1);
+      else
+        m_GC->DrawRectangle(0,0,(wText.getcx(m_Props) * 32)-1, (wText.getcy(m_Props) * 32)-1);
+    }
+    else {
+      if( StrOp.equals( ori, wItem.south ) || StrOp.equals( ori, wItem.north ) )
+        dc.DrawRectangle(0,0,(wText.getcy(m_Props) * 32)-1, (wText.getcx(m_Props) * 32)-1);
+      else
+        dc.DrawRectangle(0,0,(wText.getcx(m_Props) * 32)-1, (wText.getcy(m_Props) * 32)-1);
+    }
+  }
+}
+
+
 void SymbolRenderer::drawText( wxPaintDC& dc, bool occupied, const char* ori ) {
   m_bRotateable = true;
 
@@ -2736,6 +2758,7 @@ void SymbolRenderer::drawText( wxPaintDC& dc, bool occupied, const char* ori ) {
         m_GC->DrawBitmap(*m_Bitmap, 0, 0, m_Bitmap->GetWidth(), m_Bitmap->GetHeight());
       else
         dc.DrawBitmap(*m_Bitmap, 0, 0, true);
+      drawTextBorder(dc, occupied, ori);
       return;
     }
   }
@@ -2814,25 +2837,7 @@ void SymbolRenderer::drawText( wxPaintDC& dc, bool occupied, const char* ori ) {
 
   delete font;
 
-  if( wText.isborder(m_Props) ) {
-    wxPen* pen = getPen(NULL);
-    pen->SetWidth(1);
-    setPen( *pen );
-    setBrush( *wxTRANSPARENT_BRUSH );
-    if( m_UseGC ) {
-      if( StrOp.equals( ori, wItem.south ) || StrOp.equals( ori, wItem.north ) )
-        m_GC->DrawRectangle(0,0,(wText.getcy(m_Props) * 32)-1, (wText.getcx(m_Props) * 32)-1);
-      else
-        m_GC->DrawRectangle(0,0,(wText.getcx(m_Props) * 32)-1, (wText.getcy(m_Props) * 32)-1);
-    }
-    else {
-      if( StrOp.equals( ori, wItem.south ) || StrOp.equals( ori, wItem.north ) )
-        dc.DrawRectangle(0,0,(wText.getcy(m_Props) * 32)-1, (wText.getcx(m_Props) * 32)-1);
-      else
-        dc.DrawRectangle(0,0,(wText.getcx(m_Props) * 32)-1, (wText.getcy(m_Props) * 32)-1);
-    }
-  }
-
+  drawTextBorder(dc, occupied, ori);
 
 }
 

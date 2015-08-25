@@ -136,6 +136,7 @@ public:
   bool hasAlt() { return m_bHasAlt; }
   bool hasSVG(const char* svgname);
 
+  void drawTextBorder(wxPaintDC& dc, bool occupied, const char* ori);
 };
 
 #endif
