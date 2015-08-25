@@ -144,6 +144,7 @@
       <var name="findinfilename" vt="bool" defval="true"/>
       <var name="findindate" vt="bool" defval="false"/>
       <var name="link" vt="bool" defval="true"/>
+      <var name="web" vt="string" defval="http://www.google.com/search?q="/>
       <aboxapp cardinality="n" wrappername="ABoxApp">
         <var name="ext" vt="string" defval=""/>
         <var name="app" vt="string" defval=""/>

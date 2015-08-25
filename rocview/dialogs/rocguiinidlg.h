@@ -220,6 +220,8 @@ public:
     wxTextCtrl* m_DirImageRev;
     wxStaticText* m_labBoosterUID;
     wxTextCtrl* m_BoosterUID;
+    wxStaticText* m_labABoxWeb;
+    wxComboBox* m_ABoxWeb;
     wxPanel* m_TracePanel;
     wxStaticBoxSizer* m_TraceLevel;
     wxCheckBox* m_Debug;
