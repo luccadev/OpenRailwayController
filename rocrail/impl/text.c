@@ -25,6 +25,7 @@ Copyright (c) 2002-2015 Robert Jan Versluis, Rocrail.net
 #include "rocrail/wrapper/public/Action.h"
 #include "rocrail/wrapper/public/Text.h"
 #include "rocrail/wrapper/public/Loc.h"
+#include "rocrail/wrapper/public/Car.h"
 #include "rocrail/wrapper/public/ActionCtrl.h"
 #include "rocrail/wrapper/public/Block.h"
 #include "rocrail/wrapper/public/Schedule.h"
@@ -211,11 +212,25 @@ static char* __addActionProperties(iOMap map, iONode node) {
   MapOp.put(map, "callerid", (obj)NodeOp.getStr(node, "refcallerid", "-") );
   MapOp.put(map, "state", (obj)NodeOp.getStr(node, "state", "") );
   MapOp.put(map, "substate", (obj)NodeOp.getStr(node, "substate", "") );
-  MapOp.put(map, "identifier", (obj)NodeOp.getStr(node, "identifier", "") );
 
   MapOp.put(map, "load", (obj)NodeOp.getStr(node, "load", "0"));
   MapOp.put(map, "volt", (obj)NodeOp.getStr(node, "volt", "0"));
   MapOp.put(map, "temp", (obj)NodeOp.getStr(node, "temp", "0"));
+
+  if( StrOp.len(NodeOp.getStr(node, "identifier", "")) > 0 ) {
+    iOLoc lc  = ModelOp.getLocByIdent( AppOp.getModel(), NodeOp.getStr(node, "identifier", ""), NULL, NULL, NULL, True );
+    iOCar car = ModelOp.getCarByIdent( AppOp.getModel(), NodeOp.getStr(node, "identifier", ""));
+    if( lc != NULL ) {
+      if( wLoc.getimage(LocOp.base.properties(lc)) != NULL && StrOp.len(wLoc.getimage(LocOp.base.properties(lc))) > 0 )
+        MapOp.put(map, "identifier", (obj)wLoc.getimage(LocOp.base.properties(lc)) );
+    }
+    else if( car != NULL ) {
+      if( wCar.getimage(CarOp.base.properties(car)) != NULL && StrOp.len(wCar.getimage(CarOp.base.properties(car))) > 0 )
+        MapOp.put(map, "identifier", (obj)wCar.getimage(CarOp.base.properties(car)) );
+    }
+    else
+      MapOp.put(map, "identifier", (obj)NodeOp.getStr(node, "identifier", "") );
+  }
 
 
   /* Get time from Control */
