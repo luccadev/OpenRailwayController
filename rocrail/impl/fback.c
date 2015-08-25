@@ -160,8 +160,10 @@ static void __checkAction( iOFBack inst, const char* identifier ) {
       wActionCtrl.setcarcount(fbaction, data->carcount );
       wActionCtrl.setcountedcars(fbaction, data->countedcars );
       wActionCtrl.setwheelcount(fbaction, data->wheelcount );
-      if( identifier != NULL )
+      if( identifier != NULL ) {
+        TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "identifier = %s",identifier );
         wActionCtrl.setidentifier(fbaction, identifier );
+      }
       if( FBackOp.getIdentifier(inst) != NULL && StrOp.len(FBackOp.getIdentifier(inst)) > 0 )
         wActionCtrl.setlcid(fbaction, FBackOp.getIdentifier(inst));
 

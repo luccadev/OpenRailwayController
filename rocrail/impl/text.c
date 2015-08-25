@@ -220,13 +220,15 @@ static char* __addActionProperties(iOMap map, iONode node) {
   if( StrOp.len(NodeOp.getStr(node, "identifier", "")) > 0 ) {
     iOLoc lc  = ModelOp.getLocByIdent( AppOp.getModel(), NodeOp.getStr(node, "identifier", ""), NULL, NULL, NULL, True );
     iOCar car = ModelOp.getCarByIdent( AppOp.getModel(), NodeOp.getStr(node, "identifier", ""));
-    if( lc != NULL ) {
-      if( wLoc.getimage(LocOp.base.properties(lc)) != NULL && StrOp.len(wLoc.getimage(LocOp.base.properties(lc))) > 0 )
-        MapOp.put(map, "identifier", (obj)wLoc.getimage(LocOp.base.properties(lc)) );
-    }
-    else if( car != NULL ) {
+    TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999, "identifier [%s] lc=%X car=%X", NodeOp.getStr(node, "identifier", ""), lc, car);
+
+    if( car != NULL ) {
       if( wCar.getimage(CarOp.base.properties(car)) != NULL && StrOp.len(wCar.getimage(CarOp.base.properties(car))) > 0 )
         MapOp.put(map, "identifier", (obj)wCar.getimage(CarOp.base.properties(car)) );
+    }
+    else if( lc != NULL ) {
+      if( wLoc.getimage(LocOp.base.properties(lc)) != NULL && StrOp.len(wLoc.getimage(LocOp.base.properties(lc))) > 0 )
+        MapOp.put(map, "identifier", (obj)wLoc.getimage(LocOp.base.properties(lc)) );
     }
     else
       MapOp.put(map, "identifier", (obj)NodeOp.getStr(node, "identifier", "") );
