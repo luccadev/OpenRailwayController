@@ -140,6 +140,7 @@ void RocguiIniDialog::initLabels() {
   m_ABoxWeb->Append(wxT("http://www.google.com/search?q="));
   m_ABoxWeb->Append(wxT("http://duckduckgo.com/?q="));
   m_ABoxWeb->Append(wxT("http://search.yahoo.com/search?p="));
+  m_ABoxWeb->Append(wxT("http://www.bing.com/search?q="));
 
 
   // MIC:
