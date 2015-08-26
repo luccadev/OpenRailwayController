@@ -11362,7 +11362,7 @@
     <be txt="Выйсьце"/>
   </Msg>
   <Msg id="identifier">
-    <de txt="Identifizierung" tip="wenn das Zugerkennungssystem nicht die Dekoderadresse zurückmeldet"/>
+    <de txt="Identifikator" tip="wenn das Zugerkennungssystem nicht die Dekoderadresse zurückmeldet"/>
     <en txt="Identifier" tip="In case the train detection system returns not the decoder address."/>
     <nl txt="identificatie" tip="Indien de bezetmelder niet het juiste decoderadres teruggeeft."/>
     <sv txt="Identifierare" tip="Om tågigenkänningssystemet rapporterar ogiltig dekoderadress."/>
@@ -29301,7 +29301,7 @@
     <it txt="Usare solo il primo identificativo"/>
     <sr_latin txt="Upotrebi samo prvi identifikator"/>
     <nl txt="Gebruik alleen de eerste identificatie"/>
-    <de txt="Nur erste Identifizierung verwenden"/>
+    <de txt="Nur ersten Identifikator verwenden"/>
     <pt_BR txt="Usar apenas o primeiro identificador"/>
     <sl txt="Uporabi samo prvi identifikator"/>
     <fr txt="Utiliser seulement le premier identifiant"/>
@@ -29319,7 +29319,7 @@
     <it txt="Usare identificativo per impostare ingresso nel blocco"/>
     <sr_latin txt="Upotrebi identifikator za postavku u bloku"/>
     <nl txt="Gebruik de identificatie om in het blok te zetten"/>
-    <de txt="Identifizierung für Setzen in Block verwenden"/>
+    <de txt="Identifikator für Setzen in Block verwenden"/>
     <pt_BR txt="Usar o identificador para marcar no bloco"/>
     <sl txt="Uporabi identifikator za postavitev v odsek"/>
     <zh_CN txt="使用标识设置区段"/>
@@ -31880,6 +31880,7 @@
     <nl txt="Trein samenstellen"/>
     <pt_BR txt="Montagem do trem"/>
     <sl txt="Sestavi vlak"/>
+    <sr_latin txt="Sastavi voz"/>
   </Msg>
   <Msg id="startassembletrain">
     <en txt="Start assemble train"/>
@@ -31888,6 +31889,7 @@
     <nl txt="Start trein samenstellen"/>
     <pt_BR txt="Iniciar a montagem do trem"/>
     <sl txt="Začni sestavljanje vlaka"/>
+    <sr_latin txt="Započni sastavljanje voza"/>
   </Msg>
   <Msg id="stopassembletrain">
     <en txt="Stop assemble train"/>
@@ -31896,22 +31898,25 @@
     <nl txt="Stop trein samenstellen"/>
     <pt_BR txt="Parar a montagem do trem"/>
     <sl txt="Končaj sestavljanje vlaka"/>
+    <sr_latin txt="Završi sastavljanje voza"/>
   </Msg>
   <Msg id="assignident">
     <en txt="Assign identifier"/>
-    <de txt="Identifizierer zuordnen"/>
+    <de txt="Identifikator zuordnen..."/>
     <es txt="Asignar identificador"/>
     <nl txt="Identiteit toewijzen"/>
     <pt_BR txt="Atribuir identificador"/>
     <sl txt="Določi identifikator"/>
+    <sr_latin txt="Dodeli identifikator"/>
   </Msg>
   <Msg id="findident">
     <en txt="Find identifier"/>
-    <de txt="Identifizierer suchen."/>
+    <de txt="Identifikator suchen..."/>
     <es txt="Buscar identificador"/>
     <nl txt="Zoek indentificatie"/>
     <pt_BR txt="Encontrar identificador"/>
     <sl txt="Najdi identifikator"/>
+    <sr_latin txt="Pronađi identifikator"/>
   </Msg>
   <Msg id="filenotfound">
     <en txt="File [%s] not found."/>
@@ -31920,6 +31925,7 @@
     <nl txt="Bestand [%s] niet gevonden."/>
     <pt_BR txt="Arquivo [%s] não encontrado."/>
     <sl txt="Ne najdem datoteke [%s]."/>
+    <sr_latin txt="Fajl  [%s] nije nađen"/>
   </Msg>
   <Msg id="selectviewer">
     <en txt="Select viewer"/>
@@ -31928,5 +31934,6 @@
     <nl txt="Selecteer programma"/>
     <pt_BR txt="Selecionar visualizador"/>
     <sl txt="Izberi pregledovalnik"/>
+    <sr_latin txt="Izaberi pregledač"/>
   </Msg>
 </Messages>
