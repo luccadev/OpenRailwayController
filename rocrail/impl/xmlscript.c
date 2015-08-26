@@ -679,7 +679,7 @@ static Boolean __executeCmd(iONode cmd, iOMap map, const char* oid, Boolean* bre
       const char* condition = NodeOp.getStr(cmd, "condition", NULL);
       char* conditionRes = NULL;
       if( condition != NULL ) {
-        conditionRes = VarOp.getText(condition, map, ' ');
+        conditionRes = TextOp.replaceAllSubstitutions(condition, map);
         TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999, "continue condition [%s]", conditionRes );
       }
       if( conditionRes == NULL || __isCondition(conditionRes, NodeOp.getBool(cmd, "alltrue", True)) ) {
@@ -696,7 +696,7 @@ static Boolean __executeCmd(iONode cmd, iOMap map, const char* oid, Boolean* bre
       const char* condition = NodeOp.getStr(cmd, "condition", NULL);
       char* conditionRes = NULL;
       if( condition != NULL ) {
-        conditionRes = VarOp.getText(condition, map, ' ');
+        conditionRes = TextOp.replaceAllSubstitutions(condition, map);
         TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999, "break condition [%s]", conditionRes );
       }
       if( conditionRes == NULL || __isCondition(conditionRes, NodeOp.getBool(cmd, "alltrue", True)) ) {
@@ -958,7 +958,7 @@ static Boolean __doIf(iONode nodeScript, iOMap map, iONode script) {
   Boolean classOK = True;
 
   if( condition != NULL ) {
-    char* conditionRes = VarOp.getText(condition, map, ' ');
+    char* conditionRes = TextOp.replaceAllSubstitutions(condition, map);
     TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999, "if condition [%s]", conditionRes );
     conditionOK = __isCondition(conditionRes, NodeOp.getBool(nodeScript, "alltrue", True));
   }
@@ -1108,7 +1108,7 @@ static Boolean __doForEach(iONode nodeScript, iOMap map, iONode script) {
           else
             MapOp.put(map, "bkclass", (obj)wBlock.getclass(child));
         }
-        conditionRes = VarOp.getText(condition, map, ' ');
+        conditionRes = TextOp.replaceAllSubstitutions(condition, map);
         TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999, "for each in table [%s] condition [%s]", NodeOp.getName(table), conditionRes );
       }
 
