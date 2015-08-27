@@ -12,9 +12,14 @@
 #include "wx/defs.h"
 #endif
 
+#include <wx/clipbrd.h>
+#include <wx/dataobj.h>
+
 #include "rocview/public/guiapp.h"
 #include "rocview/public/base.h"
 #include "rocrail/wrapper/public/DataReq.h"
+
+#include "rocs/public/trace.h"
 #include "rocs/public/doc.h"
 #include "rocs/public/node.h"
 
@@ -35,6 +40,16 @@ XmlScriptDlg::XmlScriptDlg( wxWindow* parent, iONode node ):xmlscriptdlggen( par
 
 void XmlScriptDlg::initLabels() {
   m_Validate->SetLabel( wxGetApp().getMsg( "validate" ) );
+  m_Insert->SetLabel( wxGetApp().getMsg( "insert" ) );
+  m_Statement->Append(wxT("break"));
+  m_Statement->Append(wxT("call"));
+  m_Statement->Append(wxT("exit"));
+  m_Statement->Append(wxT("foreach"));
+  m_Statement->Append(wxT("if"));
+  m_Statement->Append(wxT("sleep"));
+  m_Statement->Append(wxT("sub"));
+  m_Statement->Append(wxT("switch"));
+  m_Statement->Append(wxT("while"));
   // Buttons
   m_stdButtonSave->SetLabel( wxGetApp().getMsg( "save" ) );
   m_stdButtonCancel->SetLabel( wxGetApp().getMsg( "cancel" ) );
@@ -117,3 +132,47 @@ void XmlScriptDlg::onSave( wxCommandEvent& event )
     EndModal( wxID_OK );
   }
 }
+
+
+void XmlScriptDlg::onInsert( wxCommandEvent& event ) {
+  const char* statement = NULL;
+
+  if( m_Statement->GetValue().StartsWith(wxT("if")) )
+    statement = "  <if condition=\"\">\n    <then>\n    </then>\n    <else>\n    </else>\n  </if>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("foreach")) )
+    statement = "  <foreach table=\"\" condition=\"\">\n  </foreach>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("while")) )
+    statement = "  <while condition=\"\">\n  </while>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("switch")) )
+    statement = "  <switch var=\"\">\n    <case val=\"\">\n    </case>\n    <default>\n    </default>\n  </switch>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("sub")) )
+    statement = "  <sub file=\"\" id=\"\"/>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("call")) )
+    statement = "  <call id=\"\"/>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("break")) )
+    statement = "  <break cmt=\"\"/>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("exit")) )
+    statement = "  <exit cmt=\"\"/>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("sleep")) )
+    statement = "  <sleep time=\"\"/>\n";
+
+  if( statement != NULL ) {
+    TraceOp.trc( "xmlscriptdlg", TRCLEVEL_INFO, __LINE__, 9999,"copy=%s", statement );
+
+    wxClipboard* cb = wxTheClipboard;
+    if( cb != NULL ) {
+      if( cb->Open() ) {
+        wxString text( wxString(statement,wxConvUTF8) );
+        if( !text.IsEmpty() ) {
+          wxTextDataObject *data = new wxTextDataObject( text );
+          cb->SetData( data );
+        }
+        cb->Close();
+        TraceOp.trc( "xmlscriptdlg", TRCLEVEL_INFO, __LINE__, 9999,"paste..." );
+        m_XML->Paste();
+      }
+    }
+  }
+
+}
+
