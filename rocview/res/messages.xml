@@ -11363,7 +11363,7 @@
   </Msg>
   <Msg id="identifier">
     <de txt="Identifikator" tip="wenn das Zugerkennungssystem nicht die Dekoderadresse zurückmeldet"/>
-    <en txt="Identifier" tip="In case the train detection system returns not the decoder address."/>
+    <en txt="Identifier" alttxt="Tag" tip="In case the train detection system returns not the decoder address."/>
     <nl txt="identificatie" tip="Indien de bezetmelder niet het juiste decoderadres teruggeeft."/>
     <sv txt="Identifierare" tip="Om tågigenkänningssystemet rapporterar ogiltig dekoderadress."/>
     <fr txt="Identifiant" tip="Si le système de détection des trains ne renvoie pas l'adresse du décodeur."/>
