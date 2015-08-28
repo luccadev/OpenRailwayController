@@ -66,6 +66,7 @@ class wxGrid;
 #define ID_PANEL_GENERAL 10004
 #define ID_ABOX_ID 10494
 #define ID_TEXTCTRL_ID 10005
+#define ID_ABOX_IDENT 10501
 #define ID_ABOX_ROADNAME 10495
 #define wxID_STATIC_DESCRIPTION 10018
 #define ID_TEXTCTRL_DESCRIPTION 10006
@@ -77,7 +78,6 @@ class wxGrid;
 #define ID_BUTTON_SHOWDOC 10391
 #define wxID_STATIC_PURCHASED 10021
 #define ID_TEXTCTRL_PURCHASED 10009
-#define ID_ABOX_IDENT 10501
 #define ID_STATICTEXT1 10064
 #define ID_LC_SERVICED 10313
 #define ID_LOC_ACTIONS 10380
@@ -268,6 +268,9 @@ public:
     /// wxEVT_LEFT_UP event handler for ID_ABOX_ID
     void OnAboxID( wxMouseEvent& event );
 
+    /// wxEVT_LEFT_UP event handler for ID_ABOX_IDENT
+    void OnAboxIdent( wxMouseEvent& event );
+
     /// wxEVT_LEFT_UP event handler for ID_ABOX_ROADNAME
     void OnAboxRoadname( wxMouseEvent& event );
 
@@ -282,9 +285,6 @@ public:
 
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON_SHOWDOC
     void OnButtonShowdocClick( wxCommandEvent& event );
-
-    /// wxEVT_LEFT_UP event handler for ID_ABOX_IDENT
-    void OnAboxIdent( wxMouseEvent& event );
 
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_LC_SERVICED
     void OnLcServicedClick( wxCommandEvent& event );
@@ -463,6 +463,10 @@ public:
     wxBoxSizer* m_GeneralSizer;
     wxStaticText* m_label_ID;
     wxTextCtrl* m_ID;
+    wxStaticText* m_labShortID;
+    wxTextCtrl* m_ShortID;
+    wxStaticText* m_labIdent;
+    wxTextCtrl* m_Ident;
     wxStaticText* m_labRoadname;
     wxTextCtrl* m_Roadname;
     wxStaticText* m_labNumber;
@@ -489,10 +493,6 @@ public:
     wxTextCtrl* m_Purchased;
     wxStaticText* m_labValue;
     wxTextCtrl* m_Value;
-    wxStaticText* m_labShortID;
-    wxTextCtrl* m_ShortID;
-    wxStaticText* m_labIdent;
-    wxTextCtrl* m_Ident;
     wxStaticText* m_Label_Runtime;
     wxTextCtrl* m_RunTime;
     wxStaticText* m_labMTime;
