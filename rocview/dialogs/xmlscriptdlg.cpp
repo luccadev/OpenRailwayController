@@ -41,8 +41,10 @@ XmlScriptDlg::XmlScriptDlg( wxWindow* parent, iONode node ):xmlscriptdlggen( par
 void XmlScriptDlg::initLabels() {
   m_Validate->SetLabel( wxGetApp().getMsg( "validate" ) );
   m_Insert->SetLabel( wxGetApp().getMsg( "insert" ) );
+  m_Statement->Append(wxT("-- STATEMENTS --"));
   m_Statement->Append(wxT("break"));
   m_Statement->Append(wxT("call"));
+  m_Statement->Append(wxT("comment"));
   m_Statement->Append(wxT("exit"));
   m_Statement->Append(wxT("foreach"));
   m_Statement->Append(wxT("if"));
@@ -50,6 +52,10 @@ void XmlScriptDlg::initLabels() {
   m_Statement->Append(wxT("sub"));
   m_Statement->Append(wxT("switch"));
   m_Statement->Append(wxT("while"));
+  m_Statement->Append(wxT("-- COMMANDS --"));
+  m_Statement->Append(wxT("sensor"));
+  m_Statement->Append(wxT("text"));
+  m_Statement->Append(wxT("variable"));
   // Buttons
   m_stdButtonSave->SetLabel( wxGetApp().getMsg( "save" ) );
   m_stdButtonCancel->SetLabel( wxGetApp().getMsg( "cancel" ) );
@@ -155,6 +161,14 @@ void XmlScriptDlg::onInsert( wxCommandEvent& event ) {
     statement = "  <exit cmt=\"\"/>\n";
   else if( m_Statement->GetValue().StartsWith(wxT("sleep")) )
     statement = "  <sleep time=\"\"/>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("comment")) )
+    statement = "  <!-- okay -->\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("variable")) )
+    statement = "  <vr id=\"\" text=\"\" value=\"\"/>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("text")) )
+    statement = "  <tx id=\"\" format=\"\"/>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("sensor")) )
+    statement = "  <fb id=\"\" cmd=\"\"/>\n";
 
   if( statement != NULL ) {
     TraceOp.trc( "xmlscriptdlg", TRCLEVEL_INFO, __LINE__, 9999,"copy=%s", statement );
