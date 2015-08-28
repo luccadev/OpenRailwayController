@@ -32,6 +32,7 @@ class XmlScriptDlg : public xmlscriptdlggen
 		void onSave( wxCommandEvent& event );
 		void onValidate( wxCommandEvent& event );
 		void onInsert( wxCommandEvent& event );
+		void onStatement( wxCommandEvent& event );
 	public:
 		/** Constructor */
 		XmlScriptDlg( wxWindow* parent, iONode node );

@@ -31936,4 +31936,7 @@
     <sl txt="Izberi pregledovalnik"/>
     <sr_latin txt="Izaberi pregledač"/>
   </Msg>
+  <Msg id="statement">
+    <en txt="Statement"/>
+  </Msg>
 </Messages>

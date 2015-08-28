@@ -18,6 +18,8 @@
 #include "rocview/public/guiapp.h"
 #include "rocview/public/base.h"
 #include "rocrail/wrapper/public/DataReq.h"
+#include "rocrail/wrapper/public/Item.h"
+#include "rocrail/wrapper/public/Plan.h"
 
 #include "rocs/public/trace.h"
 #include "rocs/public/doc.h"
@@ -41,6 +43,10 @@ XmlScriptDlg::XmlScriptDlg( wxWindow* parent, iONode node ):xmlscriptdlggen( par
 void XmlScriptDlg::initLabels() {
   m_Validate->SetLabel( wxGetApp().getMsg( "validate" ) );
   m_Insert->SetLabel( wxGetApp().getMsg( "insert" ) );
+  m_labStatement->SetLabel( wxGetApp().getMsg( "statement" ) );
+  m_labCommandID->SetLabel( wxGetApp().getMsg( "id" ) );
+  m_labCommand->SetLabel( wxGetApp().getMsg( "command" ) );
+
   m_Statement->Append(wxT("-- STATEMENTS --"));
   m_Statement->Append(wxT("break"));
   m_Statement->Append(wxT("call"));
@@ -155,62 +161,62 @@ void XmlScriptDlg::onSave( wxCommandEvent& event )
 
 
 void XmlScriptDlg::onInsert( wxCommandEvent& event ) {
-  const char* statement = NULL;
+  char* statement = NULL;
 
   if( m_Statement->GetValue().StartsWith(wxT("if")) )
-    statement = "  <if condition=\"\">\n    <then>\n    </then>\n    <else>\n    </else>\n  </if>\n";
+    statement = StrOp.dup("  <if condition=\"\">\n    <then>\n    </then>\n    <else>\n    </else>\n  </if>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("foreach")) )
-    statement = "  <foreach table=\"\" condition=\"\">\n  </foreach>\n";
+    statement = StrOp.dup("  <foreach table=\"\" condition=\"\">\n  </foreach>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("while")) )
-    statement = "  <while condition=\"\">\n  </while>\n";
+    statement = StrOp.dup("  <while condition=\"\">\n  </while>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("switch")) )
-    statement = "  <switch var=\"\">\n    <case val=\"\">\n    </case>\n    <default>\n    </default>\n  </switch>\n";
+    statement = StrOp.dup("  <switch var=\"\">\n    <case val=\"\">\n    </case>\n    <default>\n    </default>\n  </switch>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("sub")) )
-    statement = "  <sub file=\"\" id=\"\"/>\n";
+    statement = StrOp.dup("  <sub file=\"\" id=\"\"/>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("call")) )
-    statement = "  <call id=\"\"/>\n";
+    statement = StrOp.dup("  <call id=\"\"/>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("break")) )
-    statement = "  <break cmt=\"\"/>\n";
+    statement = StrOp.dup("  <break cmt=\"\"/>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("exit")) )
-    statement = "  <exit cmt=\"\"/>\n";
+    statement = StrOp.dup("  <exit cmt=\"\"/>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("sleep")) )
-    statement = "  <sleep time=\"\"/>\n";
+    statement = StrOp.dup("  <sleep time=\"\"/>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("comment")) )
-    statement = "  <!-- okay -->\n";
+    statement = StrOp.dup("  <!-- okay -->\n");
   else if( m_Statement->GetValue().StartsWith(wxT("variable")) )
-    statement = "  <vr id=\"\" text=\"\" value=\"\"/>\n";
+    statement = StrOp.dup("  <vr id=\"\" text=\"\" value=\"\"/>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("text")) )
-    statement = "  <tx id=\"\" format=\"\"/>\n";
+    statement = StrOp.dup("  <tx id=\"\" format=\"\"/>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("sensor")) )
-    statement = "  <fb id=\"\" cmd=\"\"/>\n";
+    statement = StrOp.dup("  <fb id=\"\" cmd=\"\"/>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("locomotive")) )
-    statement = "  <lc id=\"\" cmd=\"\"/>\n";
+    statement = StrOp.dup("  <lc id=\"\" cmd=\"\"/>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("switch")) )
-    statement = "  <sw id=\"\" cmd=\"\"/>\n";
+    statement = StrOp.dup("  <sw id=\"\" cmd=\"\"/>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("signal")) )
-    statement = "  <sg id=\"\" cmd=\"\"/>\n";
+    statement = StrOp.dup("  <sg id=\"\" cmd=\"\"/>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("function")) )
-    statement = "  <fn id=\"\" fnchanged=\"\" f?=\"\"/>\n";
+    statement = StrOp.dup("  <fn id=\"\" fnchanged=\"\" f?=\"\"/>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("output")) )
-    statement = "  <co id=\"\" cmd=\"\"/>\n";
+    statement = StrOp.dup("  <co id=\"\" cmd=\"\"/>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("block")) )
-    statement = "  <bk id=\"\" cmd=\"\"/>\n";
+    statement = StrOp.fmt("  <bk id=\"%s\" cmd=\"%s\"/>\n", (const char*)m_CommandID->GetValue().mb_str(wxConvUTF8), (const char*)m_Command->GetValue().mb_str(wxConvUTF8));
   else if( m_Statement->GetValue().StartsWith(wxT("route")) )
-    statement = "  <st id=\"\" cmd=\"\"/>\n";
+    statement = StrOp.dup("  <st id=\"\" cmd=\"\"/>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("operator")) )
-    statement = "  <operator id=\"\" cmd=\"\"/>\n";
+    statement = StrOp.dup("  <operator id=\"\" cmd=\"\"/>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("system")) )
-    statement = "  <sys id=\"\" cmd=\"\"/>\n";
+    statement = StrOp.dup("  <sys id=\"\" cmd=\"\"/>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("automat")) )
-    statement = "  <auto id=\"\" cmd=\"\"/>\n";
+    statement = StrOp.dup("  <auto id=\"\" cmd=\"\"/>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("car")) )
-    statement = "  <car id=\"\" cmd=\"\"/>\n";
+    statement = StrOp.dup("  <car id=\"\" cmd=\"\"/>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("location")) )
-    statement = "  <location id=\"\" cmd=\"\"/>\n";
+    statement = StrOp.dup("  <location id=\"\" cmd=\"\"/>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("stagingblock")) )
-    statement = "  <sb id=\"\" cmd=\"\"/>\n";
+    statement = StrOp.dup("  <sb id=\"\" cmd=\"\"/>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("fiddleyard")) )
-    statement = "  <seltab id=\"\" cmd=\"\"/>\n";
+    statement = StrOp.dup("  <seltab id=\"\" cmd=\"\"/>\n");
 
   if( statement != NULL ) {
     TraceOp.trc( "xmlscriptdlg", TRCLEVEL_INFO, __LINE__, 9999,"copy=%s", statement );
@@ -228,7 +234,43 @@ void XmlScriptDlg::onInsert( wxCommandEvent& event ) {
         m_XML->Paste();
       }
     }
+    StrOp.free(statement);
   }
 
+}
+
+static int __sortStr(obj* _a, obj* _b) {
+    const char* a = (const char*)*_a;
+    const char* b = (const char*)*_b;
+    return strcmp( a, b );
+}
+
+void XmlScriptDlg::onStatement( wxCommandEvent& event ) {
+  m_CommandID->Clear();
+  m_Command->Clear();
+
+  iONode model = wxGetApp().getModel();
+  iOList list = ListOp.inst();
+
+  if( m_Statement->GetValue().StartsWith(wxT("block")) ) {
+    iONode bklist = wPlan.getbklist( model );
+    if( bklist != NULL ) {
+      int cnt = NodeOp.getChildCnt( bklist );
+      for( int i = 0; i < cnt; i++ ) {
+        iONode bk = NodeOp.getChild( bklist, i );
+        ListOp.add(list, (obj)wItem.getid( bk ));
+      }
+      m_Command->Append( wxT("reserve") );
+    }
+  }
+
+  ListOp.sort(list, &__sortStr);
+  int cnt = ListOp.size( list );
+  for( int i = 0; i < cnt; i++ ) {
+    const char* id = (const char*)ListOp.get( list, i );
+    m_CommandID->Append( wxString(id,wxConvUTF8) );
+  }
+
+  ListOp.base.del(list);
 }
 

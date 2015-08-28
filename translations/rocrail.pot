@@ -8123,3 +8123,9 @@ msgstr ""
 msgid "Select viewer"
 msgstr ""
 
+#. 
+# id="statement"
+#, c-format
+msgid "Statement"
+msgstr ""
+
