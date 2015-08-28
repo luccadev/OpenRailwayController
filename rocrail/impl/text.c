@@ -230,8 +230,10 @@ static char* __addActionProperties(iOMap map, iONode node) {
       if( wLoc.getimage(LocOp.base.properties(lc)) != NULL && StrOp.len(wLoc.getimage(LocOp.base.properties(lc))) > 0 )
         MapOp.put(map, "identifier", (obj)wLoc.getimage(LocOp.base.properties(lc)) );
     }
-    else
+    else {
       MapOp.put(map, "identifier", (obj)NodeOp.getStr(node, "identifier", "") );
+      MapOp.put(map, "lccode", (obj)NodeOp.getStr(node, "identifier", "") );
+    }
   }
 
 
