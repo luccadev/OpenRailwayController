@@ -793,7 +793,7 @@ void SignalDialog::CreateControls()
     itemFlexGridSizer13->Add(m_labDecID, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString m_DecIDStrings;
-    m_DecID = new wxComboBox( m_GeneralPanel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, m_DecIDStrings, wxCB_DROPDOWN );
+    m_DecID = new wxComboBox( m_GeneralPanel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, m_DecIDStrings, wxCB_READONLY );
     itemFlexGridSizer13->Add(m_DecID, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_LabelBlockID = new wxStaticText( m_GeneralPanel, wxID_STATIC_SG_BLOCKID, _("blockid"), wxDefaultPosition, wxDefaultSize, 0 );

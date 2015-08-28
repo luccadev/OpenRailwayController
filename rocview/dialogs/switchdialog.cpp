@@ -1264,7 +1264,7 @@ void SwitchDialog::CreateControls()
     itemFlexGridSizer15->Add(m_labDecID, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT|wxBOTTOM, 5);
 
     wxArrayString m_DecIDStrings;
-    m_DecID = new wxComboBox( m_GeneralPanel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, m_DecIDStrings, wxCB_DROPDOWN );
+    m_DecID = new wxComboBox( m_GeneralPanel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, m_DecIDStrings, wxCB_READONLY );
     itemFlexGridSizer15->Add(m_DecID, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT|wxBOTTOM, 5);
 
     m_labBlockID = new wxStaticText( m_GeneralPanel, wxID_ANY, _("BlockID"), wxDefaultPosition, wxDefaultSize, 0 );
