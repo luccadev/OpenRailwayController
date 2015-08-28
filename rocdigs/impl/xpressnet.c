@@ -1110,7 +1110,7 @@ static void __evaluateResponse( iOXpressNet xpressnet, byte* in ) {
       data->listenerFun( data->listenerObj, nodeC, TRCLEVEL_INFO );
 
     TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999,
-        "BiDi Sensor %d ident=%ld direction=%s", addr, ident, in[4]&0x80?"fwd":"rev");
+        "BiDi Sensor %d code=%ld direction=%s", addr, ident, in[4]&0x80?"fwd":"rev");
   }
 
   /* BiDi 0x73 0xF0 SID_H SID_L */

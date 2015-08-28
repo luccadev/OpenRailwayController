@@ -3126,7 +3126,7 @@ static iOLoc _getLocByIdent( iOModel inst, const char* ident1, const char* ident
     char locoAddrStr[32];
     StrOp.fmtb(locoAddrStr, "%d", LocOp.getAddress(loc) );
 
-    TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "loco %s ident=%s, event ident=%s, %s, %s, %s",
+    TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "loco %s code=%s, event code=%s, %s, %s, %s",
         LocOp.getId(loc), LocOp.getIdent(loc), ident1!=NULL?ident1:"-", ident2!=NULL?ident2:"-", ident3!=NULL?ident3:"-", ident4!=NULL?ident4:"-" );
 
     if( onlyFirstIdent ) {
@@ -3135,7 +3135,7 @@ static iOLoc _getLocByIdent( iOModel inst, const char* ident1, const char* ident
         return loc;
       }
       else if( LocOp.getAddress(loc) > 0 && StrOp.equals(locoAddrStr, ident1) ) {
-        TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "loco %s ident=%s", LocOp.getId(loc), locoAddrStr );
+        TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "loco %s code=%s", LocOp.getId(loc), locoAddrStr );
         return loc;
       }
     }

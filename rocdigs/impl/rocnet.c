@@ -1612,7 +1612,7 @@ static byte* __evaluateSensor( iOrocNet rocnet, byte* rn ) {
         ident[i+1] = '\0';
       }
       if( action == RN_SENSORID_REPORT ) {
-        TraceOp.trc( name, TRCLEVEL_MONITOR, __LINE__, 9999, "mobile sensor report, id=%s", ident);
+        TraceOp.trc( name, TRCLEVEL_MONITOR, __LINE__, 9999, "mobile sensor report, code=%s", ident);
         wFeedback.setid( evt, ident );
       }
       else
@@ -1622,7 +1622,7 @@ static byte* __evaluateSensor( iOrocNet rocnet, byte* rn ) {
     load = (rn[RN_PACKET_LEN] == 5 ? rn[RN_PACKET_DATA+4]:0);
     wFeedback.setload( evt, load );
 
-    TraceOp.trc( name, TRCLEVEL_MONITOR, __LINE__, 9999, "sensor report %d:%d %s id(ent)=%s load=%d", sndr, addr, rn[RN_PACKET_DATA+2]?"on":"off", ident, load );
+    TraceOp.trc( name, TRCLEVEL_MONITOR, __LINE__, 9999, "sensor report %d:%d %s code=%s load=%d", sndr, addr, rn[RN_PACKET_DATA+2]?"on":"off", ident, load );
 
     if( data->iid != NULL )
       wFeedback.setiid( evt, data->iid );

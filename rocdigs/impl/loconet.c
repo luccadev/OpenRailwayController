@@ -523,7 +523,7 @@ static void __handleLissy(iOLocoNet loconet, byte* msg) {
     wFeedback.setwheelcount( nodeC, sensdata );
   }
   else {
-    TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999, "lissy=%d ident=%d dir=%d", lissyaddr, sensdata, dir );
+    TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999, "lissy=%d code=%d dir=%d", lissyaddr, sensdata, dir );
 
     wFeedback.setfbtype( nodeC, wFeedback.fbtype_lissy );
 

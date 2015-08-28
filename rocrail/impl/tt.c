@@ -2221,7 +2221,7 @@ static void __fbBridgeEvent( obj inst, Boolean puls, const char* id, const char*
   Boolean stateMid1 = wTurntable.isstateMid( data->props );
   Boolean stateMid2 = wTurntable.isstateMid2( data->props );
 
-  TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "Turntable:%s: fbid=%s state=%s ident=%d",
+  TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "Turntable:%s: fbid=%s state=%s code=%d",
                  inst->id(inst), id, puls?"true":"false", ident );
 
   /* send event to the turntable owner block */

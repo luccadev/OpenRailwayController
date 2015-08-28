@@ -1585,7 +1585,7 @@ static void __handleSensor(iOBiDiB bidib, iOBiDiBNode bidibnode, int addr, Boole
 
   addr++; /* increase address with one */
   TraceOp.trc( name, TRCLEVEL_MONITOR, __LINE__, 9999,
-      "sensor bus=%08X addr=%d state=%s ident=%d type=%s username=%s", bidibnode->uid, addr, state?"occ":"free", locoAddr, sType, bidibnode->username );
+      "sensor bus=%08X addr=%d state=%s code=%d type=%s username=%s", bidibnode->uid, addr, state?"occ":"free", locoAddr, sType, bidibnode->username );
 
   if( type == -1 || type == 0 || type == 2 ) {
     /* occ event */
@@ -1657,7 +1657,7 @@ static void __handleMultiAddrSensor(iOBiDiB bidib, iOBiDiBNode bidibnode, int ad
     if( type[0] == 3 ) sType = "ext-accessory";
 
     TraceOp.trc( name, TRCLEVEL_MONITOR, __LINE__, 9999,
-        "sensor bus=%08X addr=%d state=%s type=%s ident=%s,%s,%s,%s cnt=%d username=%s",
+        "sensor bus=%08X addr=%d state=%s type=%s code=%s,%s,%s,%s cnt=%d username=%s",
         bidibnode->uid, addr, state?"occ":"free", sType,
         wFeedback.getidentifier(nodeC), wFeedback.getidentifier2(nodeC), wFeedback.getidentifier3(nodeC), wFeedback.getidentifier4(nodeC),
         cnt, bidibnode->username );

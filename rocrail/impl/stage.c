@@ -533,7 +533,7 @@ static Boolean _event( iIBlockBase inst ,Boolean puls ,const char* id ,const cha
           __checkAction((iOStage)inst, "ghost", NULL, NULL);
         }
 
-        TraceOp.trc( name, TRCLEVEL_EXCEPTION, __LINE__, 9999, "Ghost train in staging block %s, fbid=%s, ident=%s, wait4enter=%d",
+        TraceOp.trc( name, TRCLEVEL_EXCEPTION, __LINE__, 9999, "Ghost train in staging block %s, fbid=%s, code=%s, wait4enter=%d",
             data->id, id, ident, data->wait4enter );
       }
     }
@@ -551,7 +551,7 @@ static Boolean _event( iIBlockBase inst ,Boolean puls ,const char* id ,const cha
   else if( section != NULL && !data->wait4enter ) {
     int lcCount = 0;
     TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999,
-        "sensors [%s] %s event for stage [%s] section [%s][%d] of [%d] target=%d sectionidx=%d ident=%s",
+        "sensors [%s] %s event for stage [%s] section [%s][%d] of [%d] target=%d sectionidx=%d code=%s",
         id, puls?"on":"off", data->id, wStageSection.getid(section), wStageSection.getnr(section),
         data->sectionCount, data->targetSection, wStageSection.getidx(section), ident!=NULL?ident:"-" );
 

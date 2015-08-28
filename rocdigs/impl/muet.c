@@ -709,7 +709,7 @@ static void __reader( void* threadinst ) {
                 "monitor event: bus=%d, addr=%d val=%02X key=%s.", bus, addr, val, key );
 
             if( MapOp.haskey( data->identmap, key) ) {
-              TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999, "key=%s is a ident sensor unit.", key );
+              TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999, "key=%s is a code sensor unit.", key );
               data->fbstate[bus][addr] = val;
               /* get the loco number */
               byte *cmd = allocMem(32);

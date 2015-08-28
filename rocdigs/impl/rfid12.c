@@ -242,7 +242,7 @@ static void __evaluateRFID(iORFID12 inst, char* rfid, int idx) {
   data->readerTick[addr-1] = SystemOp.getTick();
   addr = addr + data->fboffset;
 
-  TraceOp.trc( name, TRCLEVEL_MONITOR, __LINE__, 9999, "evaluateRFID[%c][%s]: addr=%d id=%s", rfid[0], rfid+1, addr, ident );
+  TraceOp.trc( name, TRCLEVEL_MONITOR, __LINE__, 9999, "evaluateRFID[%c][%s]: addr=%d code=%s", rfid[0], rfid+1, addr, ident );
 
   wFeedback.setstate( evt, True );
   wFeedback.setaddr( evt, addr );

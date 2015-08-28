@@ -412,7 +412,7 @@ static void _setGhostDetected(iIBlockBase inst, const char* key, const char* ide
       }
       tl = TRCLEVEL_EXCEPTION;
 
-      TraceOp.trc( name, tl, __LINE__, 9999, "Ghost train in block %s, fbid=%s, ident=%s",
+      TraceOp.trc( name, tl, __LINE__, 9999, "Ghost train in block %s, fbid=%s, code=%s",
           data->id, key, ident );
 
     }
@@ -441,7 +441,7 @@ static Boolean _event( iIBlockBase inst, Boolean puls, const char* id, const cha
 
   if( data->assemblingtrain ) {
     iOCar car = ModelOp.getCarByIdent(AppOp.getModel(), ident);
-    TraceOp.trc( name, TRCLEVEL_CALC, __LINE__, 9999, "assembling train [%s] in block [%s] car ident [%s]", data->assembletrainid, data->id, ident );
+    TraceOp.trc( name, TRCLEVEL_CALC, __LINE__, 9999, "assembling train [%s] in block [%s] car code [%s]", data->assembletrainid, data->id, ident );
     if( car != NULL ) {
       int i = 0;
       for( i = 0; i < ListOp.size(data->assembledtrain); i++) {
@@ -475,7 +475,7 @@ static Boolean _event( iIBlockBase inst, Boolean puls, const char* id, const cha
   if( fbevt == NULL ) {
     /* event without description; look up in map */
     if( ident != NULL && StrOp.len(ident) > 0 )
-      TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999, "%s reports ident=[%s]", id, ident!=NULL?ident:"-");
+      TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999, "%s reports code=[%s]", id, ident!=NULL?ident:"-");
     fbevt = ModPlanOp.getEvent4Block( NULL, NULL , data->props, data->fromBlockId, id);
   }
 
@@ -489,7 +489,7 @@ static Boolean _event( iIBlockBase inst, Boolean puls, const char* id, const cha
     fbevt = (iONode)MapOp.get( data->fbEvents, key );
   }
 
-  TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "Block[%s] id=%s fbid=%s state=%s ident=%s fbfrom=%s fbaction=%s from=%s byroute=%s",
+  TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "Block[%s] id=%s fbid=%s state=%s code=%s fbfrom=%s fbaction=%s from=%s byroute=%s",
       data->id, id, key, puls?"true":"false", ident != NULL ? ident:"-",
                  fbevt != NULL ? wFeedbackEvent.getfrom(fbevt):"NULL",
                  fbevt != NULL ? wFeedbackEvent.getaction(fbevt):"?",
@@ -623,7 +623,7 @@ static Boolean _event( iIBlockBase inst, Boolean puls, const char* id, const cha
   else if( StrOp.len(ident) > 0 ){
     /* reset ident */
     TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999,
-        "reset ident[%s] in block[%s] to zero; bi-com is disabled", ident, data->id);
+        "reset code[%s] in block[%s] to zero; bi-com is disabled", ident, data->id);
     ident = "";
   }
 
@@ -638,21 +638,21 @@ static Boolean _event( iIBlockBase inst, Boolean puls, const char* id, const cha
     {
       /* TODO: Check MU consist */
       if( LocOp.matchIdent(loc, ident, ident2, ident3, ident4) ) {
-        TraceOp.trc( name, TRCLEVEL_CALC, __LINE__, 9999, "ident matched: block=%s loc(MU)=[%s] ident=[%s]",
+        TraceOp.trc( name, TRCLEVEL_CALC, __LINE__, 9999, "code matched: block=%s loco-code=[%s] code=[%s]",
             data->id, locident, ident );
       }
       else if (StrOp.len(ident) > 0 && atoi(ident) > 0) {
-        TraceOp.trc( name, TRCLEVEL_EXCEPTION, __LINE__, 9999, "Loc identifier does not match! block=%s locident=[%s] ident=[%s]",
+        TraceOp.trc( name, TRCLEVEL_EXCEPTION, __LINE__, 9999, "Loc code does not match! block=%s loco-code=[%s] code=[%s]",
             data->id, locident, ident );
         /* Power off? */
         if( wCtrl.ispoweroffonidentmismatch( AppOp.getIniNode( wCtrl.name() ) ) ) {
-          TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999, "power off for mismatching ident" );
+          TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999, "power off for mismatching code" );
           AppOp.stop();
         }
       }
     }
     else if( StrOp.len(ident) > 0 && StrOp.len(locident) > 0 && StrOp.equals(ident, locident) ) {
-      TraceOp.trc( name, TRCLEVEL_CALC, __LINE__, 9999, "ident matched: block=%s locident=[%s] ident=[%s]",
+      TraceOp.trc( name, TRCLEVEL_CALC, __LINE__, 9999, "code matched: block=%s loco-code=[%s] code=[%s]",
           data->id, locident, ident );
     }
 
@@ -729,7 +729,7 @@ static Boolean _event( iIBlockBase inst, Boolean puls, const char* id, const cha
     /* ghost train! */
     /* broadcast ghost state */
     if( __isElectricallyFree((iOBlock)inst) ) {
-      TraceOp.trc( name, TRCLEVEL_WARNING, __LINE__, 9999, "Ghost train no longer in block %s, fbid=%s, ident=%s",
+      TraceOp.trc( name, TRCLEVEL_WARNING, __LINE__, 9999, "Ghost train no longer in block %s, fbid=%s, code=%s",
           data->id, key, ident );
 
       if( !wCtrl.iskeepghost( AppOp.getIniNode( wCtrl.name() ) ) ) {
@@ -753,19 +753,19 @@ static Boolean _event( iIBlockBase inst, Boolean puls, const char* id, const cha
       }
     }
     else {
-      TraceOp.trc( name, TRCLEVEL_WARNING, __LINE__, 9999, "Ghost train still remains in block %s, fbid=%s, ident=%s",
+      TraceOp.trc( name, TRCLEVEL_WARNING, __LINE__, 9999, "Ghost train still remains in block %s, fbid=%s, code=%s",
           data->id, key, ident );
     }
   }
   else if( fbevt == NULL && data->fromBlockId != NULL ) {
     /* undefined event! */
-    TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "Sensor %s in block %s is undefined! ident=%s fromBlockId=%s",
+    TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "Sensor %s in block %s is undefined! code=%s fromBlockId=%s",
                    key, data->id, ident, data->fromBlockId );
     countwheels = False;
   }
   else {
     /* unhandled event! */
-    TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "unhandled sensor [%s] in block [%s]! puls=[%d], ident=[%s], ghost=[%d], loc=[%s], fromBlockId=[%s]",
+    TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "unhandled sensor [%s] in block [%s]! puls=[%d], code=[%s], ghost=[%d], loc=[%s], fromBlockId=[%s]",
                    key, data->id, puls, ident, data->ghost,
                    (loc == NULL ? "NULL":LocOp.getId(loc)),
                    (data->fromBlockId == NULL ? "NULL":data->fromBlockId) );
@@ -3113,7 +3113,7 @@ static void _acceptIdent( iIBlockBase inst, Boolean accept ) {
   data->acceptident = accept;
 
   TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999,
-               "ACCEPT IDENT for block [%s] is %s", data->id, accept?"ON":"OFF" );
+               "ACCEPT CODE for block [%s] is %s", data->id, accept?"ON":"OFF" );
 
   if( data->acceptident != wBlock.isacceptident(data->props) ) {
     iONode nodeD = NodeOp.inst( wBlock.name(), NULL, ELEMENT_NODE );

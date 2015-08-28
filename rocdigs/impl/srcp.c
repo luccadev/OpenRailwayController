@@ -994,7 +994,7 @@ static void __infoReader( void * threadinst ) {
             if( StrTokOp.hasMoreTokens( tok ) ) {
               ident = StrTokOp.nextToken( tok );
             }
-            TraceOp.trc( name, TRCLEVEL_MONITOR, __LINE__, 9999, "sensor %d:%d=%d ident=[%s]", busnr, addr, val, ident!=NULL?ident:"" );
+            TraceOp.trc( name, TRCLEVEL_MONITOR, __LINE__, 9999, "sensor %d:%d=%d code=[%s]", busnr, addr, val, ident!=NULL?ident:"" );
             __handleFB(srcp, busnr, addr, val, ident);
           }
 

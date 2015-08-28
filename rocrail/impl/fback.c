@@ -514,7 +514,7 @@ static void _event( iOFBack inst, iONode nodeC ) {
 
   if( data->carcount > 0 && data->countedcars <= data->carcount ) {
     /* Cleanup Node3 */
-    TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999, "COUNTING CARS: fb[%s] state=%s ident=%d val=%d carcount=%d countedcars=%d",
+    TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999, "COUNTING CARS: fb[%s] state=%s code=%d val=%d carcount=%d countedcars=%d",
                  FBackOp.getId(inst), data->state?"ON":"OFF", wFeedback.getidentifier( nodeC ),
                  wFeedback.getval( nodeC ), data->carcount, data->countedcars );
 
@@ -551,7 +551,7 @@ static void _event( iOFBack inst, iONode nodeC ) {
   wFeedback.setdirection( data->props, wFeedback.isdirection( nodeC ) );
   wFeedback.setload( data->props, wFeedback.getload( nodeC ) );
 
-  TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "fb[%s] state=%s ident=%s dir=%s val=%d count=%d",
+  TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "fb[%s] state=%s code=%s dir=%s val=%d count=%d",
                FBackOp.getId(inst), data->state?"ON":"OFF", wFeedback.getidentifier( nodeC ), wFeedback.isdirection( nodeC )?"fwd":"rev",
                wFeedback.getval( nodeC ), data->counter );
 
@@ -576,7 +576,7 @@ static void _event( iOFBack inst, iONode nodeC ) {
     wFeedback.setdirection(node, wFeedback.isdirection(nodeC) );
     while( listener != NULL ) {
       hasListener = True;
-      TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "fb [%s](%s) ident=%s val=%d count=%d call listener 0x%08X...",
+      TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "fb [%s](%s) code=%s val=%d count=%d call listener 0x%08X...",
                    FBackOp.getId(inst), data->state?"ON":"OFF", wFeedback.getidentifier( nodeC ),
                    wFeedback.getval( nodeC ), data->counter, listener );
       listener->event( listener, node );
@@ -590,7 +590,7 @@ static void _event( iOFBack inst, iONode nodeC ) {
     __checkAction( inst, wFeedback.getidentifier(nodeC) );
 
   if(!hasListener) {
-    TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "fb[%s] (%s) ident=%s val=%d count=%d has no listener...",
+    TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "fb[%s] (%s) code=%s val=%d count=%d has no listener...",
                  FBackOp.getId(inst), data->state?"ON":"OFF",
                  wFeedback.getidentifier( nodeC ), wFeedback.getval( nodeC ), data->counter );
   }

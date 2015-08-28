@@ -125,7 +125,7 @@ static void _fbEvent( obj inst ,Boolean puls ,const char* id ,const char* ident,
   time_t     t = time(NULL);
   int        ms = SystemOp.getMillis();
 
-  TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "fbid=%s state=%s ident=%s",
+  TraceOp.trc( name, TRCLEVEL_USER1, __LINE__, 9999, "fbid=%s state=%s code=%s",
                  id, puls?"true":"false", ident );
   
   
@@ -134,7 +134,7 @@ static void _fbEvent( obj inst ,Boolean puls ,const char* id ,const char* ident,
     return;
   }
 
-  TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999, "fbid=[%s] ident=[%s]", id, ident );
+  TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999, "fbid=[%s] code=[%s]", id, ident );
   
   /* check the event */
   if( StrOp.equals( id, wMVTrack.gets1( data->props ) ) ) {
