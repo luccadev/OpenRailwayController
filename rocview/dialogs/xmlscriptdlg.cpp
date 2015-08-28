@@ -53,7 +53,21 @@ void XmlScriptDlg::initLabels() {
   m_Statement->Append(wxT("switch"));
   m_Statement->Append(wxT("while"));
   m_Statement->Append(wxT("-- COMMANDS --"));
+  m_Statement->Append(wxT("automat"));
+  m_Statement->Append(wxT("block"));
+  m_Statement->Append(wxT("car"));
+  m_Statement->Append(wxT("fiddleyard"));
+  m_Statement->Append(wxT("function"));
+  m_Statement->Append(wxT("location"));
+  m_Statement->Append(wxT("locomotive"));
+  m_Statement->Append(wxT("operator"));
+  m_Statement->Append(wxT("output"));
+  m_Statement->Append(wxT("route"));
   m_Statement->Append(wxT("sensor"));
+  m_Statement->Append(wxT("signal"));
+  m_Statement->Append(wxT("stagingblock"));
+  m_Statement->Append(wxT("switch"));
+  m_Statement->Append(wxT("system"));
   m_Statement->Append(wxT("text"));
   m_Statement->Append(wxT("variable"));
   // Buttons
@@ -169,6 +183,34 @@ void XmlScriptDlg::onInsert( wxCommandEvent& event ) {
     statement = "  <tx id=\"\" format=\"\"/>\n";
   else if( m_Statement->GetValue().StartsWith(wxT("sensor")) )
     statement = "  <fb id=\"\" cmd=\"\"/>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("locomotive")) )
+    statement = "  <lc id=\"\" cmd=\"\"/>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("switch")) )
+    statement = "  <sw id=\"\" cmd=\"\"/>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("signal")) )
+    statement = "  <sg id=\"\" cmd=\"\"/>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("function")) )
+    statement = "  <fn id=\"\" fnchanged=\"\" f?=\"\"/>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("output")) )
+    statement = "  <co id=\"\" cmd=\"\"/>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("block")) )
+    statement = "  <bk id=\"\" cmd=\"\"/>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("route")) )
+    statement = "  <st id=\"\" cmd=\"\"/>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("operator")) )
+    statement = "  <operator id=\"\" cmd=\"\"/>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("system")) )
+    statement = "  <sys id=\"\" cmd=\"\"/>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("automat")) )
+    statement = "  <auto id=\"\" cmd=\"\"/>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("car")) )
+    statement = "  <car id=\"\" cmd=\"\"/>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("location")) )
+    statement = "  <location id=\"\" cmd=\"\"/>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("stagingblock")) )
+    statement = "  <sb id=\"\" cmd=\"\"/>\n";
+  else if( m_Statement->GetValue().StartsWith(wxT("fiddleyard")) )
+    statement = "  <seltab id=\"\" cmd=\"\"/>\n";
 
   if( statement != NULL ) {
     TraceOp.trc( "xmlscriptdlg", TRCLEVEL_INFO, __LINE__, 9999,"copy=%s", statement );
