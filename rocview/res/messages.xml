@@ -11363,7 +11363,7 @@
   </Msg>
   <Msg id="identifier">
     <de txt="Identifikator" tip="wenn das Zugerkennungssystem nicht die Dekoderadresse zurückmeldet"/>
-    <en txt="Identifier" alttxt="Tag" tip="In case the train detection system returns not the decoder address."/>
+    <en txt="Identifier" alttxt="Code" tip="In case the train detection system returns not the decoder address."/>
     <nl txt="identificatie" tip="Indien de bezetmelder niet het juiste decoderadres teruggeeft."/>
     <sv txt="Identifierare" tip="Om tågigenkänningssystemet rapporterar ogiltig dekoderadress."/>
     <fr txt="Identifiant" tip="Si le système de détection des trains ne renvoie pas l'adresse du décodeur."/>
@@ -29296,7 +29296,7 @@
     <pl txt="Wyślij komendę prędkość zero podczas uruchamiania"/>
   </Msg>
   <Msg id="useonlyfirstident">
-    <en txt="Use only the first identifier"/>
+    <en txt="Use only the first identifier" alttxt="Use only the first code"/>
     <en_GB txt="Use only the first identifier"/>
     <it txt="Usare solo il primo identificativo"/>
     <sr_latin txt="Upotrebi samo prvi identifikator"/>
@@ -29314,7 +29314,7 @@
     <pl txt="Używaj tylko pierwszego identyfikatora"/>
   </Msg>
   <Msg id="useident">
-    <en txt="Use identifier to set in block"/>
+    <en txt="Use identifier to set in block" alttxt="Use code to set in block"/>
     <en_GB txt="Use identifier to set in block"/>
     <it txt="Usare identificativo per impostare ingresso nel blocco"/>
     <sr_latin txt="Upotrebi identifikator za postavku u bloku"/>
@@ -31901,7 +31901,7 @@
     <sr_latin txt="Završi sastavljanje voza"/>
   </Msg>
   <Msg id="assignident">
-    <en txt="Assign identifier"/>
+    <en txt="Assign identifier" alttxt="Assign code"/>
     <de txt="Identifikator zuordnen..."/>
     <es txt="Asignar identificador"/>
     <nl txt="Identiteit toewijzen"/>
@@ -31910,7 +31910,7 @@
     <sr_latin txt="Dodeli identifikator"/>
   </Msg>
   <Msg id="findident">
-    <en txt="Find identifier"/>
+    <en txt="Find identifier" alttxt="Find code"/>
     <de txt="Identifikator suchen..."/>
     <es txt="Buscar identificador"/>
     <nl txt="Zoek indentificatie"/>
