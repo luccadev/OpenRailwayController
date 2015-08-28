@@ -223,12 +223,14 @@ static char* __addActionProperties(iOMap map, iONode node) {
     TraceOp.trc( name, TRCLEVEL_INFO, __LINE__, 9999, "identifier [%s] lc=%X car=%X", NodeOp.getStr(node, "identifier", ""), lc, car);
 
     if( car != NULL ) {
+      MapOp.put(map, "lccode2id", (obj)wCar.getid(CarOp.base.properties(car)) );
       if( wCar.getimage(CarOp.base.properties(car)) != NULL && StrOp.len(wCar.getimage(CarOp.base.properties(car))) > 0 ) {
         MapOp.put(map, "identifier", (obj)wCar.getimage(CarOp.base.properties(car)) );
         MapOp.put(map, "lccode2img", (obj)wCar.getimage(CarOp.base.properties(car)) );
       }
     }
     else if( lc != NULL ) {
+      MapOp.put(map, "lccode2id", (obj)wLoc.getid(LocOp.base.properties(lc)) );
       if( wLoc.getimage(LocOp.base.properties(lc)) != NULL && StrOp.len(wLoc.getimage(LocOp.base.properties(lc))) > 0 ) {
         MapOp.put(map, "identifier", (obj)wLoc.getimage(LocOp.base.properties(lc)) );
         MapOp.put(map, "lccode2img", (obj)wLoc.getimage(LocOp.base.properties(lc)) );
