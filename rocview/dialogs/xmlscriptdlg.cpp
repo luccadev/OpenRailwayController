@@ -58,6 +58,7 @@ void XmlScriptDlg::initLabels() {
   m_Statement->Append(wxT("sub"));
   m_Statement->Append(wxT("switch"));
   m_Statement->Append(wxT("while"));
+
   m_Statement->Append(wxT("-- COMMANDS --"));
   m_Statement->Append(wxT("automat"));
   m_Statement->Append(wxT("block"));
@@ -163,6 +164,7 @@ void XmlScriptDlg::onSave( wxCommandEvent& event )
 void XmlScriptDlg::onInsert( wxCommandEvent& event ) {
   char* statement = NULL;
 
+  /* Statements */
   if( m_Statement->GetValue().StartsWith(wxT("if")) )
     statement = StrOp.dup("  <if condition=\"\">\n    <then>\n    </then>\n    <else>\n    </else>\n  </if>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("foreach")) )
@@ -183,40 +185,82 @@ void XmlScriptDlg::onInsert( wxCommandEvent& event ) {
     statement = StrOp.dup("  <sleep time=\"\"/>\n");
   else if( m_Statement->GetValue().StartsWith(wxT("comment")) )
     statement = StrOp.dup("  <!-- okay -->\n");
+
+  /* Commands */
   else if( m_Statement->GetValue().StartsWith(wxT("variable")) )
     statement = StrOp.dup("  <vr id=\"\" text=\"\" value=\"\"/>\n");
+
   else if( m_Statement->GetValue().StartsWith(wxT("text")) )
     statement = StrOp.dup("  <tx id=\"\" format=\"\"/>\n");
+
   else if( m_Statement->GetValue().StartsWith(wxT("sensor")) )
     statement = StrOp.dup("  <fb id=\"\" cmd=\"\"/>\n");
+
   else if( m_Statement->GetValue().StartsWith(wxT("locomotive")) )
     statement = StrOp.dup("  <lc id=\"\" cmd=\"\"/>\n");
+
   else if( m_Statement->GetValue().StartsWith(wxT("switch")) )
     statement = StrOp.dup("  <sw id=\"\" cmd=\"\"/>\n");
+
   else if( m_Statement->GetValue().StartsWith(wxT("signal")) )
     statement = StrOp.dup("  <sg id=\"\" cmd=\"\"/>\n");
+
   else if( m_Statement->GetValue().StartsWith(wxT("function")) )
     statement = StrOp.dup("  <fn id=\"\" fnchanged=\"\" f?=\"\"/>\n");
+
   else if( m_Statement->GetValue().StartsWith(wxT("output")) )
     statement = StrOp.dup("  <co id=\"\" cmd=\"\"/>\n");
-  else if( m_Statement->GetValue().StartsWith(wxT("block")) )
-    statement = StrOp.fmt("  <bk id=\"%s\" cmd=\"%s\"/>\n", (const char*)m_CommandID->GetValue().mb_str(wxConvUTF8), (const char*)m_Command->GetValue().mb_str(wxConvUTF8));
+
+  else if( m_Statement->GetValue().StartsWith(wxT("block")) ) {
+    const char* cmdStr = "cmd";
+    const char* extra  = "";
+    if(m_Command->GetValue().StartsWith(wxT("open")) || m_Command->GetValue().StartsWith(wxT("closed")) )
+      cmdStr = "state";
+    if(m_Command->GetValue().StartsWith(wxT("reserve")) )
+      extra = " lcid=\"\"";
+    if(m_Command->GetValue().StartsWith(wxT("classadd")) || m_Command->GetValue().StartsWith(wxT("classdel")) || m_Command->GetValue().StartsWith(wxT("classset")))
+      extra = " class=\"\"";
+    statement = StrOp.fmt("  <bk id=\"%s\" %s=\"%s\"%s/>\n",
+        (const char*)m_CommandID->GetValue().mb_str(wxConvUTF8),
+        cmdStr,
+        (const char*)m_Command->GetValue().mb_str(wxConvUTF8),
+        extra);
+  }
+
   else if( m_Statement->GetValue().StartsWith(wxT("route")) )
     statement = StrOp.dup("  <st id=\"\" cmd=\"\"/>\n");
+
   else if( m_Statement->GetValue().StartsWith(wxT("operator")) )
     statement = StrOp.dup("  <operator id=\"\" cmd=\"\"/>\n");
+
   else if( m_Statement->GetValue().StartsWith(wxT("system")) )
     statement = StrOp.dup("  <sys id=\"\" cmd=\"\"/>\n");
-  else if( m_Statement->GetValue().StartsWith(wxT("automat")) )
-    statement = StrOp.dup("  <auto id=\"\" cmd=\"\"/>\n");
-  else if( m_Statement->GetValue().StartsWith(wxT("car")) )
-    statement = StrOp.dup("  <car id=\"\" cmd=\"\"/>\n");
+
+  else if( m_Statement->GetValue().StartsWith(wxT("automat")) ) {
+    statement = StrOp.fmt("  <auto cmd=\"%s\"/>\n", (const char*)m_Command->GetValue().mb_str(wxConvUTF8));
+  }
+
+  else if( m_Statement->GetValue().StartsWith(wxT("car")) ) {
+    statement = StrOp.fmt("  <car id=\"%s\" cmd=\"%s\"/>\n",
+        (const char*)m_CommandID->GetValue().mb_str(wxConvUTF8),
+        (const char*)m_Command->GetValue().mb_str(wxConvUTF8));
+  }
+
   else if( m_Statement->GetValue().StartsWith(wxT("location")) )
     statement = StrOp.dup("  <location id=\"\" cmd=\"\"/>\n");
+
   else if( m_Statement->GetValue().StartsWith(wxT("stagingblock")) )
     statement = StrOp.dup("  <sb id=\"\" cmd=\"\"/>\n");
-  else if( m_Statement->GetValue().StartsWith(wxT("fiddleyard")) )
-    statement = StrOp.dup("  <seltab id=\"\" cmd=\"\"/>\n");
+
+  else if( m_Statement->GetValue().StartsWith(wxT("fiddleyard")) ) {
+    const char* cmdStr = "cmd";
+    if(m_Command->GetValue().StartsWith(wxT("open")) || m_Command->GetValue().StartsWith(wxT("closed")) )
+      cmdStr = "state";
+    statement = StrOp.fmt("  <seltab id=\"%s\" %s=\"%s\"/>\n",
+        (const char*)m_CommandID->GetValue().mb_str(wxConvUTF8),
+        cmdStr,
+        (const char*)m_Command->GetValue().mb_str(wxConvUTF8) );
+  }
 
   if( statement != NULL ) {
     TraceOp.trc( "xmlscriptdlg", TRCLEVEL_INFO, __LINE__, 9999,"copy=%s", statement );
@@ -252,7 +296,21 @@ void XmlScriptDlg::onStatement( wxCommandEvent& event ) {
   iONode model = wxGetApp().getModel();
   iOList list = ListOp.inst();
 
-  if( m_Statement->GetValue().StartsWith(wxT("block")) ) {
+  /* automat */
+  if( m_Statement->GetValue().StartsWith(wxT("automat")) ) {
+    m_Command->Append( wxT("off") );
+    m_Command->Append( wxT("on") );
+    m_Command->Append( wxT("reset") );
+    m_Command->Append( wxT("resume") );
+    m_Command->Append( wxT("start") );
+    m_Command->Append( wxT("startvirtual") );
+    m_Command->Append( wxT("stop") );
+    m_Command->Append( wxT("v0locos") );
+    m_Command->Append( wxT("vrestorelocos") );
+  }
+
+  /* block */
+  else if( m_Statement->GetValue().StartsWith(wxT("block")) ) {
     iONode bklist = wPlan.getbklist( model );
     if( bklist != NULL ) {
       int cnt = NodeOp.getChildCnt( bklist );
@@ -260,8 +318,50 @@ void XmlScriptDlg::onStatement( wxCommandEvent& event ) {
         iONode bk = NodeOp.getChild( bklist, i );
         ListOp.add(list, (obj)wItem.getid( bk ));
       }
-      m_Command->Append( wxT("reserve") );
     }
+    m_Command->Append( wxT("classadd") );
+    m_Command->Append( wxT("classdel") );
+    m_Command->Append( wxT("classset") );
+    m_Command->Append( wxT("closed") );
+    m_Command->Append( wxT("open") );
+    m_Command->Append( wxT("reserve") );
+    m_Command->Append( wxT("resetfifo") );
+    m_Command->Append( wxT("resetwc") );
+    m_Command->Append( wxT("startassembletrain") );
+    m_Command->Append( wxT("stopassembletrain") );
+  }
+
+  /* car */
+  else if( m_Statement->GetValue().StartsWith(wxT("car")) ) {
+    iONode carlist = wPlan.getcarlist( model );
+    if( carlist != NULL ) {
+      int cnt = NodeOp.getChildCnt( carlist );
+      for( int i = 0; i < cnt; i++ ) {
+        iONode car = NodeOp.getChild( carlist, i );
+        ListOp.add(list, (obj)wItem.getid( car ));
+      }
+    }
+    m_Command->Append( wxT("empty") );
+    m_Command->Append( wxT("loaded") );
+    m_Command->Append( wxT("maintenance") );
+  }
+
+  /* FY */
+  else if( m_Statement->GetValue().StartsWith(wxT("fiddleyard")) ) {
+    iONode fylist = wPlan.getseltablist( model );
+    if( fylist != NULL ) {
+      int cnt = NodeOp.getChildCnt( fylist );
+      for( int i = 0; i < cnt; i++ ) {
+        iONode fy = NodeOp.getChild( fylist, i );
+        ListOp.add(list, (obj)wItem.getid( fy ));
+      }
+    }
+    m_Command->Append( wxT("#") );
+    m_Command->Append( wxT("closed") );
+    m_Command->Append( wxT("next") );
+    m_Command->Append( wxT("open") );
+    m_Command->Append( wxT("prev") );
+    m_Command->Append( wxT("unlock") );
   }
 
   ListOp.sort(list, &__sortStr);
