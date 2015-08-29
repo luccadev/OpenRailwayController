@@ -3,7 +3,7 @@
 
 Copyright (c) 2002-2015 Robert Jan Versluis, Rocrail.net
 
- 
+
 
 
  All rights reserved.
@@ -219,19 +219,32 @@ int RocGui::OnExit() {
       iONode node = NodeOp.inst( wWindow.name(), m_Ini, ELEMENT_NODE );
       NodeOp.addChild( m_Ini, node );
     }
-    wWindow.setx( wGui.getwindow( m_Ini ), point.x );
-    wWindow.sety( wGui.getwindow( m_Ini ), point.y );
 
-    wxSize size = this->getFrame()->GetSize();
-    if( size.GetWidth() > 100 && size.GetHeight() > 100 ) {
-      wWindow.setcx( wGui.getwindow( m_Ini ), size.GetWidth() );
-      wWindow.setcy( wGui.getwindow( m_Ini ), size.GetHeight() );
+    if( this->getFrame()->IsMaximized() ) {
+      wWindow.setmode( wGui.getwindow( m_Ini ), wGui.window_mode_maximized );
+      TraceOp.trc( "app", TRCLEVEL_INFO, __LINE__, 9999, "frame leaving mode: maximized" );
+    } else if( this->getFrame()->IsFullScreen() ) {
+      wWindow.setmode( wGui.getwindow( m_Ini ), wGui.window_mode_fullscreen );
+      TraceOp.trc( "app", TRCLEVEL_INFO, __LINE__, 9999, "frame leaving mode: fullscreen" );
+    } else {
+      wWindow.setmode( wGui.getwindow( m_Ini ), wGui.window_mode_none );
+      TraceOp.trc( "app", TRCLEVEL_INFO, __LINE__, 9999, "frame leaving mode: none" );
+
+      // only save coordinates when frame is not leaved in special mode
+      wWindow.setx( wGui.getwindow( m_Ini ), point.x );
+      wWindow.sety( wGui.getwindow( m_Ini ), point.y );
+
+      wxSize size = this->getFrame()->GetSize();
+      if( size.GetWidth() > 100 && size.GetHeight() > 100 ) {
+        wWindow.setcx( wGui.getwindow( m_Ini ), size.GetWidth() );
+        wWindow.setcy( wGui.getwindow( m_Ini ), size.GetHeight() );
+      }
+
+      #ifdef __APPLE__
+      if( !wGui.isverticaltoolbar( m_Ini ) )
+        wWindow.setcy( wGui.getwindow( m_Ini ), size.GetHeight() - 35 ); // hard coded work around for increasing height.
+      #endif
     }
-
-#ifdef __APPLE__
-    if( !wGui.isverticaltoolbar( m_Ini ) )
-      wWindow.setcy( wGui.getwindow( m_Ini ), size.GetHeight() - 35 ); // hard coded work around for increasing height.
-#endif
 
     if( wGui.getrrcon( m_Ini ) == NULL ) {
       iONode node = NodeOp.inst( wRRCon.name(), m_Ini, ELEMENT_NODE );
@@ -924,6 +937,8 @@ bool RocGui::OnInit() {
   int iWidth  = wWindow.getcx( wGui.getwindow( m_Ini ) );
   int iHeight = wWindow.getcy( wGui.getwindow( m_Ini ) );
 
+  const char* iMode = wWindow.getmode( wGui.getwindow( m_Ini ) );
+
   if( iX < 0 )
     iX = 0;
   if( iY < 0 )
@@ -936,7 +951,13 @@ bool RocGui::OnInit() {
   m_Frame = new RocGuiFrame( _T("Rocrail"), wxPoint(iX, iY),
       wxDefaultSize, m_Ini, theme, sp, tp );
   m_Frame->SetSize(wxSize(iWidth, iHeight));
+
   m_Frame->initFrame();
+
+  if( StrOp.equals( wGui.window_mode_maximized, iMode ) )
+    m_Frame->Maximize( true );
+  else if( StrOp.equals( wGui.window_mode_fullscreen, iMode ) )
+    fs = True;
 
   TraceOp.trc( "app", TRCLEVEL_INFO, __LINE__, 9999,"control code %s", wRRCon.getcontrolcode( wGui.getrrcon( m_Ini ) ) );
   m_Frame->m_ControlCode = wRRCon.getcontrolcode( wGui.getrrcon( m_Ini ) );
