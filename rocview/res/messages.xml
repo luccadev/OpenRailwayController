@@ -11362,9 +11362,9 @@
     <be txt="Выйсьце"/>
   </Msg>
   <Msg id="identifier">
-    <de txt="Identifikator" tip="wenn das Zugerkennungssystem nicht die Dekoderadresse zurückmeldet"/>
+    <de txt="Code" tip="wenn das Zugerkennungssystem nicht die Dekoderadresse zurückmeldet"/>
     <en txt="Identifier" alttxt="Code" tip="In case the train detection system returns not the decoder address."/>
-    <nl txt="identificatie" tip="Indien de bezetmelder niet het juiste decoderadres teruggeeft."/>
+    <nl txt="Code" tip="Indien de bezetmelder niet het juiste decoderadres teruggeeft."/>
     <sv txt="Identifierare" tip="Om tågigenkänningssystemet rapporterar ogiltig dekoderadress."/>
     <fr txt="Identifiant" tip="Si le système de détection des trains ne renvoie pas l'adresse du décodeur."/>
     <tr txt="Identifier" tip="Eğer tren algılama sistemi decoder adresini döndürmezse."/>
@@ -12600,7 +12600,7 @@
     <be txt="Шлях да выявы"/>
   </Msg>
   <Msg id="regulated">
-    <de txt="Lastreglung" tip="Decoder hat eine Lastregelung"/>
+    <de txt="Lastreglung" tip="Dekoder hat eine Lastregelung"/>
     <en txt="Regulated" tip="Decoder has a motor regulator."/>
     <nl txt="Lastregeling" tip="Decoder is voorzien van lastregeling"/>
     <sv txt="Reglerad" tip="Dekodern har motorregulator"/>
@@ -14616,7 +14616,7 @@
     <be txt="Затрымка"/>
   </Msg>
   <Msg id="locorefresh">
-    <de txt="Lokdekoder Aktualisierung"/>
+    <de txt="Lokdekoder-Aktualisierung"/>
     <en txt="Locdecoder refresh"/>
     <nl txt="Locdecoder actualisering"/>
     <sv txt="Lokdekoderuppdatering"/>
@@ -18090,7 +18090,7 @@
   <Msg id="readspeedcurve">
     <en txt="Read current speed curve from decoder?"/>
     <nl txt="Huidige snelheidscurve uit decoder lezen?"/>
-    <de txt="Gechwindigkeitstabelle vom Decoder auslesen"/>
+    <de txt="Gechwindigkeitstabelle vom Dekoder auslesen"/>
     <bg txt="Прочетете текущата скорост крива от декодер?"/>
     <el txt="Διαβάστε τη σημερινή καμπύλη ταχύτητας από αποκωδικοποιητή;"/>
     <fr txt="Lire la courbe de vitesse actuelle du décodeur ?"/>
@@ -27434,7 +27434,7 @@
     <it txt="Accessori" tip="Pannello decoder accessori"/>
     <zh_CN txt="附件表" tip="解码器附件表"/>
     <sl txt="Dodatna oprema" tip="Seznam dekoderjev dodatne opreme"/>
-    <de txt="Zubehör-Tabelle" tip="Zubehör-Decoder-Tabelle"/>
+    <de txt="Zubehör-Tabelle" tip="Zubehör-Dekoder-Tabelle"/>
     <sr_latin txt="Tabela pomoćnih uređaja" tip="Tabela dekodera pom. uredjaja"/>
     <ru txt="Аксессуары" tip="Аксессуарные декодеры"/>
     <pt_BR txt="Tabela de acessórios" tip="Tabela de decodificadores dos acessórios"/>
@@ -29300,8 +29300,8 @@
     <en_GB txt="Use only the first identifier"/>
     <it txt="Usare solo il primo identificativo"/>
     <sr_latin txt="Upotrebi samo prvi identifikator"/>
-    <nl txt="Gebruik alleen de eerste identificatie"/>
-    <de txt="Nur ersten Identifikator verwenden"/>
+    <nl txt="Gebruik alleen de eerste code"/>
+    <de txt="Nur ersten Code verwenden"/>
     <pt_BR txt="Usar apenas o primeiro identificador"/>
     <sl txt="Uporabi samo prvi identifikator"/>
     <fr txt="Utiliser seulement le premier identifiant"/>
@@ -29318,8 +29318,8 @@
     <en_GB txt="Use identifier to set in block"/>
     <it txt="Usare identificativo per impostare ingresso nel blocco"/>
     <sr_latin txt="Upotrebi identifikator za postavku u bloku"/>
-    <nl txt="Gebruik de identificatie om in het blok te zetten"/>
-    <de txt="Identifikator für Setzen in Block verwenden"/>
+    <nl txt="Gebruik de code om in het blok te zetten"/>
+    <de txt="Code für Setzen in Block verwenden"/>
     <pt_BR txt="Usar o identificador para marcar no bloco"/>
     <sl txt="Uporabi identifikator za postavitev v odsek"/>
     <zh_CN txt="使用标识设置区段"/>
@@ -31664,6 +31664,7 @@
     <pt_BR txt="Validar"/>
     <sl txt="Preveri"/>
     <sr_latin txt="Proveri"/>
+    <be txt="Праверыць"/>
   </Msg>
   <Msg id="regularstop">
     <en txt="Regular stop"/>
@@ -31740,6 +31741,7 @@
     <sl txt="Najdi"/>
     <sr_latin txt="Nađi"/>
     <it txt="Trova"/>
+    <be txt="Шукаць"/>
   </Msg>
   <Msg id="category">
     <en txt="Category"/>
@@ -31750,6 +31752,7 @@
     <sl txt="Kategorija"/>
     <sr_latin txt="Kategorija"/>
     <it txt="Categoria"/>
+    <be txt="Катэгорыя"/>
   </Msg>
   <Msg id="link">
     <en txt="Link"/>
@@ -31778,6 +31781,7 @@
     <pt_BR txt="Resultado"/>
     <sl txt="Rezultat"/>
     <sr_latin txt="Rezultat"/>
+    <be txt="Вынік"/>
   </Msg>
   <Msg id="note">
     <en txt="Note"/>
@@ -31788,6 +31792,7 @@
     <sl txt="Beležka"/>
     <sr_latin txt="Napomena"/>
     <it txt="Nota"/>
+    <be txt="Нататка"/>
   </Msg>
   <Msg id="filename">
     <en txt="Filename"/>
@@ -31798,6 +31803,7 @@
     <sl txt="Ime datoteke"/>
     <sr_latin txt="Ime fajla"/>
     <it txt="Nome File"/>
+    <be txt="Назва файла"/>
   </Msg>
   <Msg id="showpath">
     <en txt="Show path"/>
@@ -31818,6 +31824,7 @@
     <sl txt="Datum"/>
     <sr_latin txt="Datum"/>
     <it txt="Data"/>
+    <be txt="Дата"/>
   </Msg>
   <Msg id="toomanyhits">
     <en txt="Too many hits; Reduce selection by search criteria."/>
@@ -31902,18 +31909,18 @@
   </Msg>
   <Msg id="assignident">
     <en txt="Assign identifier" alttxt="Assign code"/>
-    <de txt="Identifikator zuordnen..."/>
+    <de txt="Code zuordnen..."/>
     <es txt="Asignar identificador"/>
-    <nl txt="Identiteit toewijzen"/>
+    <nl txt="Code toewijzen"/>
     <pt_BR txt="Atribuir identificador"/>
     <sl txt="Določi identifikator"/>
     <sr_latin txt="Dodeli identifikator"/>
   </Msg>
   <Msg id="findident">
     <en txt="Find identifier" alttxt="Find code"/>
-    <de txt="Identifikator suchen..."/>
+    <de txt="Code suchen..."/>
     <es txt="Buscar identificador"/>
-    <nl txt="Zoek indentificatie"/>
+    <nl txt="Zoek code"/>
     <pt_BR txt="Encontrar identificador"/>
     <sl txt="Najdi identifikator"/>
     <sr_latin txt="Pronađi identifikator"/>
@@ -31938,5 +31945,7 @@
   </Msg>
   <Msg id="statement">
     <en txt="Statement"/>
+    <de txt="Anweisung"/>
+    <nl txt="Statement"/>
   </Msg>
 </Messages>
