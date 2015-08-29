@@ -1178,10 +1178,10 @@ static void __evaluatePacket(iOZ21 inst, byte* packet, int packetSize) {
           packet[packetIdx+5+0], packet[packetIdx+5+1], packet[packetIdx+5+2], packet[packetIdx+5+3], packet[packetIdx+5+4],
           packet[packetIdx+5+5], packet[packetIdx+5+6], packet[packetIdx+5+7], packet[packetIdx+5+8], packet[packetIdx+5+9] );
       for( i = 0; i < 10; i++ ) {
-        int idx  = grp * 10 + i;
+        int idx  = grp * 80 + i;
         byte status = packet[packetIdx+5+i];
         for( n = 0; n < 8; n++ ) {
-          int addr = 1 + grp * 10 + i * 8 + n;
+          int addr = 1 + grp * 80 + i * 8 + n;
           byte mask = (1 << n);
           if( (status & mask) != (data->sensor[idx] & mask) ) {
             iONode nodeC = NodeOp.inst( wFeedback.name(), NULL, ELEMENT_NODE );
