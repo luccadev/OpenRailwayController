@@ -20,6 +20,9 @@
 #include "rocrail/wrapper/public/DataReq.h"
 #include "rocrail/wrapper/public/Item.h"
 #include "rocrail/wrapper/public/Plan.h"
+#include "rocrail/wrapper/public/FunDef.h"
+#include "rocrail/wrapper/public/Loc.h"
+#include "rocrail/wrapper/public/Car.h"
 
 #include "rocs/public/trace.h"
 #include "rocs/public/doc.h"
@@ -205,8 +208,20 @@ void XmlScriptDlg::onInsert( wxCommandEvent& event ) {
   else if( m_Statement->GetValue().StartsWith(wxT("signal")) )
     statement = StrOp.dup("  <sg id=\"\" cmd=\"\"/>\n");
 
-  else if( m_Statement->GetValue().StartsWith(wxT("function")) )
-    statement = StrOp.dup("  <fn id=\"\" fnchanged=\"\" f?=\"\"/>\n");
+  else if( m_Statement->GetValue().StartsWith(wxT("function")) ) {
+    if(m_Command->GetValue().StartsWith(wxT("flip")) || m_Command->GetValue().StartsWith(wxT("on")) || m_Command->GetValue().StartsWith(wxT("off"))) {
+      statement = StrOp.fmt("  <fn id=\"%s\" fndesc=\"%s\" fncmd=\"%s\"/>\n",
+          (const char*)m_CommandID->GetValue().mb_str(wxConvUTF8),
+          (const char*)m_Parameter->GetValue().mb_str(wxConvUTF8),
+          (const char*)m_Command->GetValue().mb_str(wxConvUTF8));
+    }
+    else {
+      char* f = StrOp.dup((const char*)m_Command->GetValue().mb_str(wxConvUTF8));
+      statement = StrOp.fmt("  <fn id=\"%s\" fnchanged=\"%s\" f%s=\"\"/>\n",
+          (const char*)m_CommandID->GetValue().mb_str(wxConvUTF8), f+1, f+1 );
+      StrOp.free(f);
+    }
+  }
 
   else if( m_Statement->GetValue().StartsWith(wxT("output")) )
     statement = StrOp.dup("  <co id=\"\" cmd=\"\"/>\n");
@@ -292,6 +307,7 @@ static int __sortStr(obj* _a, obj* _b) {
 void XmlScriptDlg::onStatement( wxCommandEvent& event ) {
   m_CommandID->Clear();
   m_Command->Clear();
+  m_Parameter->Clear();
 
   iONode model = wxGetApp().getModel();
   iOList list = ListOp.inst();
@@ -364,6 +380,34 @@ void XmlScriptDlg::onStatement( wxCommandEvent& event ) {
     m_Command->Append( wxT("unlock") );
   }
 
+  /* function */
+  else if( m_Statement->GetValue().StartsWith(wxT("function")) ) {
+    iONode lclist = wPlan.getlclist( model );
+    iONode carlist = wPlan.getcarlist( model );
+    if( lclist != NULL ) {
+      int cnt = NodeOp.getChildCnt( lclist );
+      for( int i = 0; i < cnt; i++ ) {
+        iONode lc = NodeOp.getChild( lclist, i );
+        if( wItem.getaddr(lc) > 0)
+          ListOp.add(list, (obj)wItem.getid( lc ));
+      }
+    }
+    if( carlist != NULL ) {
+      int cnt = NodeOp.getChildCnt( carlist );
+      for( int i = 0; i < cnt; i++ ) {
+        iONode car = NodeOp.getChild( carlist, i );
+        if( wItem.getaddr(car) > 0)
+          ListOp.add(list, (obj)wItem.getid( car ));
+      }
+    }
+    for( int n = 0; n < 29; n++ ) {
+      m_Command->Append( wxString::Format("f%d", n) );
+    }
+    m_Command->Append( wxT("flip") );
+    m_Command->Append( wxT("off") );
+    m_Command->Append( wxT("on") );
+  }
+
   ListOp.sort(list, &__sortStr);
   int cnt = ListOp.size( list );
   for( int i = 0; i < cnt; i++ ) {
@@ -373,4 +417,29 @@ void XmlScriptDlg::onStatement( wxCommandEvent& event ) {
 
   ListOp.base.del(list);
 }
+
+
+void XmlScriptDlg::onCommandID( wxCommandEvent& event ) {
+  m_Parameter->Clear();
+
+  /* function */
+  if( m_Statement->GetValue().StartsWith(wxT("function")) ) {
+    iONode lc  = wxGetApp().getFrame()->findLoc((const char*)m_CommandID->GetValue().mb_str(wxConvUTF8));
+    iONode car = wxGetApp().getFrame()->findCar((const char*)m_CommandID->GetValue().mb_str(wxConvUTF8));
+    if( lc != NULL ) {
+      iONode fundef = wLoc.getfundef(lc);
+      while(fundef != NULL) {
+        if( StrOp.len(wFunDef.gettext(fundef) ) > 0 )
+          m_Parameter->Append( wxString(wFunDef.gettext(fundef),wxConvUTF8) );
+        fundef = wLoc.nextfundef(lc, fundef);
+      }
+    }
+  }
+}
+
+
+void XmlScriptDlg::onCommand( wxCommandEvent& event ) {
+
+}
+
 
