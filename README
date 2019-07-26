@@ -1,8 +1,11 @@
-Rocrail - Model Railroad Software
-
-Copyright (C) 2002-2015 Rob Versluis, Rocrail.net
-All rights reserved.
-Web site: http://www.rocrail.net
+Dieser Branch dient der Beseitigung der memory leaks, die sich durch das gesammte Programm ziehen.
+Die meisten Leaks werden durch den fahrlässigen Gebrauch von pointer als Rückgabewerte verursacht.
+Zusätzlich wurde versucht ein eigener Memory-Manager zu bauen, vermutlich um das bereits vorher existierende Memory-Problem
+zu analysieren und zu beseitigen. Eigene Memory-Manager machen allerdings meist nur wenig Sinn, sondern 
+verschleiern mehr als das sie nützen.
+Deshalb sollten hier zwei Dinge geschehen:
+1. Ausbau des Rocrail-memory-managers
+2. Beseitigung der memory-leaks
 
 
 
